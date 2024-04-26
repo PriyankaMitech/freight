@@ -80,17 +80,17 @@
 
                                             <ul>
  
-                                                <li><a href="?/home/transport_master" >Transporter Master</a></li>
+                                                <li><a href="<?=base_url();?>transport_master" >Transporter Master</a></li>
 
-                                                <li><a href="?/home/vehicle_master" >Vehicle Master</a></li>  
+                                                <li><a href="<?=base_url();?>vehicle_master" >Vehicle Master</a></li>  
 
-                                                <li><a href="?/home/contract_master">Contract Master</a></li>        
+                                                <li><a href="<?=base_url();?>contract_master">Contract Master</a></li>        
 
-                                                <li><a href="?/home/zone_master" >Zone Master</a></li>    
+                                                <li><a href="<?=base_url();?>zone_master" >Zone Master</a></li>    
 
-                                                <li><a href="?/home/diesel_master" >Diesel Master</a></li>
+                                                <li><a href="<?=base_url();?>diesel_master" >Diesel Master</a></li>
 
-                                                <li><a href="?/home/kilometer_master" class="active">Kilometer Master</a></li>
+                                                <li><a href="<?=base_url();?>kilometer_master" class="active">Kilometer Master</a></li>
 
                                             </ul>
 
@@ -111,7 +111,7 @@
 
                         <div class="invoices-settings-bn mb-3">
 
-                            <a href="?/home/add_kilometer" class="bn">
+                            <a href="<?=base_url();?>add_kilometer" class="bn">
 
                                 <i data-feather="plus-circle"></i> Add New 
 

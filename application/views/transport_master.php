@@ -184,27 +184,27 @@
 
 
 
-                                                <li><a href="?/home/transport_master" class="active">Transporter Master</a></li>
+                                                <li><a href="<?=base_url();?>transport_master" class="active">Transporter Master</a></li>
 
 
 
-                                                <li><a href="?/home/vehicle_master">Vehicle Master</a></li>  
+                                                <li><a href="<?=base_url();?>vehicle_master">Vehicle Master</a></li>  
 
 
 
-                                                <li><a href="?/home/contract_master">Contract Master</a></li>        
+                                                <li><a href="<?=base_url();?>contract_master">Contract Master</a></li>        
 
 
 
-                                                <li><a href="?/home/zone_master">Zone Master</a></li>    
+                                                <li><a href="<?=base_url();?>zone_master">Zone Master</a></li>    
 
 
 
-                                                <li><a href="?/home/diesel_master">Diesel Master</a></li>
+                                                <li><a href="<?=base_url();?>diesel_master">Diesel Master</a></li>
 
 
 
-                                                <li><a href="?/home/kilometer_master">Kilometer Master</a></li>
+                                                <li><a href="<?=base_url();?>kilometer_master">Kilometer Master</a></li>
 
 
 
@@ -246,7 +246,7 @@
 
 
 
-                            <a href="?/home/add_transporter" class="bt">
+                            <a href="<?=base_url();?>add_transporter" class="bt">
 
 
 
@@ -522,7 +522,7 @@
 
                 $.ajax({
 
-                url: "?/home/delete_transporter/" + id,
+                url: "<?=base_url();?>delete_transporter/" + id,
 
                 type: 'GET',
 
@@ -546,7 +546,7 @@
 
                 // window.location.href = "<?php echo site_url("delete_transporter/");?>";
 
-                window.location.href = "?/home/delete_transporter/" + id;
+                window.location.href = "<?=base_url();?>delete_transporter/" + id;
 
                 // swal("Deleted!", "Your imaginary file has been deleted.", "success");
 
@@ -573,7 +573,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 jQuery.ajax({
-                    url: "?/home/delete_transporter/" + id,
+                    url: "<?=base_url();?>delete_transporter/" + id,
                     type: "GET",
                     dataType: 'html',
                     success: function () {
@@ -583,7 +583,7 @@
                         swal.fire("Error deleting!", "Please try again", "error");
                     }
                 });
-                window.location.href = "?/home/delete_transporter/" + id;
+                window.location.href = "<?=base_url();?>delete_transporter/" + id;
             }
         });
 

@@ -13,7 +13,7 @@ $route['transcred'] = 'home/transcred';
 $route['transportal'] = 'transport/transportal';
 $route['download/(:any)'] = 'transport/download/$1';
 $route['transHistory'] = 'transport/transHistory';
-$route['transport_master'] = 'home/transport_master';
+$route['transport_master'] = 'Home/transport_master';
 $route['vehicle_master'] = 'Home/vehicle_master';
 
 $route['contract_master'] = 'Home/contract_master';

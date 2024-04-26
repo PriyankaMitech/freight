@@ -166,6 +166,8 @@ class UserModel extends CI_Model {
             'VEHICLE_NAME'   => $postData['name'],
             'VEHICLE_AVERAGE'    => $postData['average'],
             'VEHICLE_LOAD_ABILITY'   => $postData['loadability'],
+            'detention_amount'   => $postData['detention_amount'],
+
             'CREATED_AT' => date("Y-m-d H:i:s"),
             'IS_ACTIVE'  => 'Y',
             'IS_DELETED' => 'N',
@@ -179,6 +181,8 @@ class UserModel extends CI_Model {
                 'VEHICLE_NAME'   => $postData['name'],
                 'VEHICLE_AVERAGE'    => $postData['average'],
                 'VEHICLE_LOAD_ABILITY'   => $postData['loadability'],
+                'detention_amount'   => $postData['detention_amount'],
+
                 'UPDATED_AT' => date("Y-m-d H:i:s"),
                 'IS_ACTIVE'  => 'Y',
                 'IS_DELETED' => 'N',
