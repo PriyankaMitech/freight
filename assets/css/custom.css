@@ -1,0 +1,272 @@
+.table .thead-light th,
+.table .thead-light td {
+    /* font-size: 13px;
+    padding: 0.5rem 0.5rem; */
+}
+
+.card-table .card-body .table tr td:first-child,
+.card-table .card-body .table tr th:first-child {
+    padding-left: 0.5rem;
+}
+
+.card-table .table td,
+.card-table .table th, 
+.NewHorizontalTable tr td {
+    border-top: 1px solid #e2e5e8;
+    padding: 0.5rem 0.5rem;
+    white-space: normal;
+    font-size: 13px;
+}
+
+/* style in reports.php */
+
+.form-select {
+    border-radius: 0;
+    /* padding: 4px 10px; */
+}
+.form-select:focus {
+    box-shadow: none;
+}
+input, .form-select {
+    border: 1px solid #000;
+    padding: 2px 8px;
+}
+
+.btn-success {
+    background-color: #1eae55;
+    border: 1px solid #1eae55;
+}
+
+.NewHorizontalTable tr {
+
+    border-bottom: 1px solid lightgray;
+    border-top: null;
+    border-collapse: collapse;
+
+}
+
+table {
+    border-collapse: collapse;
+    width: auto;
+    color: blue;
+    font-size: 11px;
+}
+
+.table-scroll th { 
+    position: sticky;
+    top: -1px;
+    z-index: 1;
+}
+.table-scroll {
+    max-height: 500px;
+    height: auto;
+    overflow-y: scroll;
+}
+.table-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+td.Heading1,
+td.Heading2 {
+    width: 24%;
+    font-weight: bold;
+}
+
+td.Heading2 {
+    padding-left: 25px;
+}
+
+td.HeadVal1,
+td.HeadVal2 {
+    width: 25%;
+    text-align: right;
+}
+
+#report {
+    background-image: url('../img/whiteDownArrow.png') !important;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.form-select.report-select {
+    background-color: #337ab7;
+    color: #fff;
+    text-align: left;
+}
+
+button.btn.btn-success {
+    margin-right: 20px;
+}
+
+.invoice-setting-btn .btn-success {
+    min-width: 45px;
+    padding: 7px 8px;
+}
+.invoice-setting-btn .btn-warning {
+    min-width: 45px;
+    padding: 7px 8px;
+}
+
+.invoice-setting-btn .btn {
+    padding: 4px 6px;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.table .thead-light th {
+    background-color: #00bfff;
+    border-top: 1px solid #00bfff !important;
+    border-color: #f1f1f1 ;
+    word-wrap: break-word;
+}
+
+/* style in cost-statement.php */
+
+
+.form-select.transport-select {
+    background-color: #286090;
+    color: #fff;
+    text-align: left;
+}
+
+.form-select.transport-select:focus {
+    box-shadow: none;
+    border: none;
+}
+
+.form-select.transport-select:focus {
+    box-shadow: none;
+    border: none;
+}
+
+
+table .thead-light th {
+    font-size: 16px;
+    color: white !important;
+    border-color: #abc6c6;
+    word-wrap: break-word;
+}
+
+.table thead tr th {
+    font-weight: 500;
+    background-color: #07285B;
+    color: white;
+}
+
+.form-select.transport-select {
+    background-color: #337AB7;
+    color: #fff;
+    text-align: center;
+
+}
+
+/* button.btn.btn-success {
+    background-color: #337AB7;
+} */
+
+
+
+.table-hover tbody tr:hover {
+     /* background-color: #2261c8;  */
+    background-color: #2F8FE1
+}
+
+
+
+.table-hover>tbody>tr:hover>* {
+    --bs-table-accent-bg: rgb(47 143 225 / 0.96%);
+    color: black;
+}
+
+#selectTransport {
+    background-image: url('../img/whiteDownArrow.png');
+    cursor: pointer;
+}
+
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 1px;
+}
+.NewHorizontalTable td , .NewHorizontalTable tr, .NewHorizontalTable tbody{
+    border-width: 0;
+}
+
+.card-table .card-body .table tr td:first-child {
+    padding-left: 0.75rem;
+}
+
+.form-select.transport-select {
+    text-align: left;
+}
+
+/* div#rightTable1 {
+    margin-left: 25px;
+    width: 91%;
+} */
+
+/* div#rightTable2 {
+    margin-left: 25px;
+    width: 97%;
+} */
+
+
+td.Middle_td {
+    text-align: center;
+}
+input.form-control.datetimepicker{
+    height:35px;
+    /* margin-left: 25px; */
+}
+/* Below 3 styles not working in custom.php but working in cost_statement.php */
+/* Invoice buttton settings */
+
+/* .invoice-setting-btn .btn {
+    /* min-width: 160px; 
+    padding: 5px 17px;
+    color: #fff;
+    border-radius: 7px;
+    font-size: 14px;
+} */
+
+/* Style for right side table 2 */
+
+
+/* .form-select {
+    display: block;
+    width: 92%;
+} */
+ /* input[type=text], input[type=password] {
+     -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; 
+    height: 30px !important;
+}  */
+
+
+
+/* style for freight master dashboard- */
+.invoices-tabs ul li {
+    padding: 15px 4px;
+}
+.invoices-tabs ul li a {
+    font-size: 14px;
+    padding: 20px;
+}
+.invoices-upload-btn {
+    padding: 5px 10px;
+}
+.text-info {
+    font-size: 16px;
+}
+.table > tbody > tr:nth-of-type(2n) {
+    background-color: #d7f1ee;
+}
+.table > tbody > tr:nth-of-type(2n+1) {
+    background-color: #fff;
+}
