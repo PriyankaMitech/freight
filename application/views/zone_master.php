@@ -181,27 +181,27 @@
 
 
 
-                                                <li><a href="?/home/transport_master">Transporter Master</a></li>
+                                                <li><a href="<?=base_url();?>transport_master">Transporter Master</a></li>
 
 
 
-                                                <li><a href="?/home/vehicle_master">Vehicle Master</a></li>  
+                                                <li><a href="<?=base_url();?>vehicle_master">Vehicle Master</a></li>  
 
 
 
-                                                <li><a href="?/home/contract_master">Contract Master</a></li>        
+                                                <li><a href="<?=base_url();?>contract_master">Contract Master</a></li>        
 
 
 
-                                                <li><a href="?/home/zone_master" class="active">Zone Master</a></li>    
+                                                <li><a href="<?=base_url();?>zone_master" class="active">Zone Master</a></li>    
 
 
 
-                                                <li><a href="?/home/diesel_master">Diesel Master</a></li>
+                                                <li><a href="<?=base_url();?>diesel_master">Diesel Master</a></li>
 
 
 
-                                                <li><a href="?/home/kilometer_master">Kilometer Master</a></li>
+                                                <li><a href="<?=base_url();?>kilometer_master">Kilometer Master</a></li>
 
 
 
@@ -243,7 +243,7 @@
 
 
 
-                            <a href="?/home/add_zone" class="bt">
+                            <a href="<?=base_url();?>add_zone" class="bt">
 
 
 

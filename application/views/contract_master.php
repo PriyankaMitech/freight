@@ -161,27 +161,27 @@
 
 
 
-                                            <li><a href="?/home/transport_master" >Transporter Master</a></li>
+                                            <li><a href="<?=base_url();?>transport_master" >Transporter Master</a></li>
 
 
 
-                                            <li><a href="?/home/vehicle_master" >Vehicle Master</a></li>  
+                                            <li><a href="<?=base_url();?>vehicle_master" >Vehicle Master</a></li>  
 
 
 
-                                            <li><a href="?/home/contract_master" class="active">Contract Master</a></li>        
+                                            <li><a href="<?=base_url();?>contract_master" class="active">Contract Master</a></li>        
 
 
 
-                                            <li><a href="?/home/zone_master" >Zone Master</a></li>    
+                                            <li><a href="<?=base_url();?>zone_master" >Zone Master</a></li>    
 
 
 
-                                            <li><a href="?/home/diesel_master" >Diesel Master</a></li>
+                                            <li><a href="<?=base_url();?>diesel_master" >Diesel Master</a></li>
 
 
 
-                                            <li><a href="?/home/kilometer_master" >Kilometer Master</a></li>
+                                            <li><a href="<?=base_url();?>kilometer_master" >Kilometer Master</a></li>
 
 
 
@@ -270,7 +270,7 @@
                         </div>
                         <div class="invoice-setting-btn col-sm-3">
                             <button type="submit" id="submit" name="import" class="btn btn-primary">Submit</button>
-                            <a href='<?= base_url() ?>?/Home/salesregisterdownload'><button type="button" id="" name="Download" class="btn btn-primary">Download</button></a>
+                            <a href='<?= base_url() ?><?=base_url();?>salesregisterdownload'><button type="button" id="" name="Download" class="btn btn-primary">Download</button></a>
                         </div>
                     </div>
                 </form>
@@ -425,7 +425,7 @@
         var Destination= $("#Destination").val();
       
       $.ajax({
-        url: "<?= base_url() ?>?/Home/contract_data",
+        url: "<?= base_url() ?><?=base_url();?>contract_data",
         method: "POST",
         data: {
           Vehicle_Name: Vehicle_Name,
@@ -461,7 +461,7 @@
         var Destination= $(this).val();
       
       $.ajax({
-        url: "<?= base_url() ?>?/Home/contract_data",
+        url: "<?= base_url() ?><?=base_url();?>contract_data",
         method: "POST",
         data: {
           Vehicle_Name: Vehicle_Name,
