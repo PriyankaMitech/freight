@@ -13,35 +13,36 @@ class Transport extends CI_Controller {
             redirect(base_url("?/Login"));
     }
     
-    public function transportal()
-{
-    $whereCon = "TR.STATUS != ''";
-    $start_date = '';
-    $end_date = '';
+	public function transportal()
+	{
+		$whereCon = "TR.STATUS != ''";
+		$start_date = '';
+		$end_date = '';
+	
+		if ($this->input->post('start_date') != '') {
+			$start_date = date('d/m/Y', strtotime($this->input->post('start_date')));
+			$whereCon .= " AND TR.BILL_DT >= STR_TO_DATE('$start_date', '%d/%m/%Y')";
+		}
+	
+		if ($this->input->post('end_date') != '') {
+			$end_date = date('d/m/Y', strtotime($this->input->post('end_date')));
+			$whereCon .= " AND TR.BILL_DT <= STR_TO_DATE('$end_date', '%d/%m/%Y')";
+		}
+	
+		$getData = $this->TransportModel->getSales($whereCon);
 
-    if ($this->input->post('start_date') != '') {
-        $start_date = date('d/m/Y', strtotime($this->input->post('start_date')));
-        $whereCon .= " AND TR.BILL_DT >= STR_TO_DATE('$start_date', '%d/%m/%Y')";
-    }
-
-    if ($this->input->post('end_date') != '') {
-        $end_date = date('d/m/Y', strtotime($this->input->post('end_date')));
-        $whereCon .= " AND TR.BILL_DT <= STR_TO_DATE('$end_date', '%d/%m/%Y')";
-    }
-
-    $getData = $this->TransportModel->getSales($whereCon);
-
-    $data = [
-        'end_date' => $end_date,
-        'start_date' => $start_date,
-        'title_meta' => ['title' => 'Transportal'],
-        'page_title' => ['title' => 'Transportal', 'li_1' => 'SmartHr', 'li_2' => 'Transportal'],
-        'getSales'   => $getData
-    ];
-
-    $this->load->view('transportal', $data);
-}
-
+		// echo "<pre>";print_r($getData);exit();
+	
+		$data = [
+			'end_date' => $end_date,
+			'start_date' => $start_date,
+			'title_meta' => ['title' => 'Transportal'],
+			'page_title' => ['title' => 'Transportal', 'li_1' => 'SmartHr', 'li_2' => 'Transportal'],
+			'getSales'   => $getData
+		];
+	
+		$this->load->view('transportal', $data);
+	}
     
     public function transHistory()
 	{
@@ -72,7 +73,6 @@ class Transport extends CI_Controller {
     //         $start_date = date('d/m/Y',strtotime($this->input->post('start_date')));
     //         //$whereCon = array_merge($whereCon, array('TR.BILL_DT >='=> CONVERT(datetime, $start_date , 103) ));
 	// 		$whereCon .= " and TR.BILL_DT >= CONVERT(datetime, '".$start_date."' , 103)";
-	
     //         $data['start_date'] = $this->input->post('start_date');
     //     }
     //     if ($this->input->post('end_date') != '') {
@@ -96,6 +96,7 @@ class Transport extends CI_Controller {
 	// 	$this->load->view('TransView', $data);
 
 	// }
+
 
 	public function TransView()
 {
@@ -137,7 +138,6 @@ class Transport extends CI_Controller {
     // Load view
     $this->load->view('TransView', $data);
 }
-
     
     public function save_trans($id)
 	{

@@ -151,17 +151,17 @@
 
                                             <ul class="nav nav-tabs">
 
-                                                <li><a href="<?=base_url();?>transport_master">Transporter Master</a></li>
+                                                <li><a href="?/home/transport_master">Transporter Master</a></li>
 
-                                                <li><a href="<?=base_url();?>vehicle_master" class="active">Vehicle Master</a></li>  
+                                                <li><a href="?/home/vehicle_master" class="active">Vehicle Master</a></li>  
 
-                                                <li><a href="<?=base_url();?>contract_master">Contract Master</a></li>        
+                                                <li><a href="?/home/contract_master">Contract Master</a></li>        
 
-                                                <li><a href="<?=base_url();?>zone_master">Zone Master</a></li>    
+                                                <li><a href="?/home/zone_master">Zone Master</a></li>    
 
-                                                <li><a href="<?=base_url();?>diesel_master">Diesel Master</a></li>
+                                                <li><a href="?/home/diesel_master">Diesel Master</a></li>
 
-                                                <li><a href="<?=base_url();?>kilometer_master">Kilometer Master</a></li>
+                                                <li><a href="?/home/kilometer_master">Kilometer Master</a></li>
 
                                             </ul>
 
@@ -201,7 +201,7 @@
 
 
 
-                            <a href="<?=base_url();?>add_vehicle" class="bt">
+                            <a href="?/home/add_vehicle" class="bt">
 
 
 
@@ -254,8 +254,6 @@
                                                    <th>Average</th>
 
                                                    <th>Loadability</th>
-                                                   <th>Detention amount</th>
-
 
                                                    <th class="text-end">Action</th>
 
@@ -284,9 +282,6 @@
 
 
                                                     <td><span class="badge bg-success-light"></span><?php echo $vehicle->VEHICLE_LOAD_ABILITY; ?></td>
-
-                                                    <td><?php echo $vehicle->detention_amount; ?></td>
-
 
 
 

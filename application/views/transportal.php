@@ -329,11 +329,13 @@
                                                     <?php echo $sales['GST_NO_SHIP']; ?> </td>
 
                                                 <td>
+ <!--
+                                                    <input type="hidden" name="Rate" value="<?php //echo $sales['Rate'] ?>">
 
-                                                    <input type="hidden" name="Rate" value="<?php echo $sales['Rate'] ?>">
+                                                    <?php// echo number_format($sales['Rate']); ?>  -->
 
-                                                    <?php echo number_format($sales['Rate']); ?> </td>
-
+                                                    <?php echo ($sales['TOTAL_VAL'])? number_format($sales['TOTAL_VAL']) :  number_format($sales['Rate']); ?>
+                                                    </td>
                                                 <td>
 
                                                     <input type="hidden" name="REP_DT" value="<?php echo $sales['REP_DT'] ?>">
@@ -480,8 +482,11 @@
 
 
 <?php $this->load->view('partials/vendor-scripts') ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
+
+
+<script src="<?php echo base_url();?>/assets/js/xlsx.full.min.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -501,6 +506,133 @@
         });
     });
 </script>
+
+<script>
+
+    $('input[name="radio_release"]').click(function() {
+
+        if($(this).is(':checked')) {
+
+                $('#top-modal').modal('show');
+
+                var sale_id = $(this).attr('value');
+
+                $('#saleid').val(sale_id);
+
+        }
+
+    });
+    // var pod = $('.pod').val();
+
+            
+
+    //         $('#top-modal').modal('hide');
+
+    //         if(pod === '')
+    //         {
+    //             alert("Upload POD");
+    //             return;
+    //         }
+    //         else
+    //         {
+                
+                
+    //             $.ajax({
+
+    //                 method: "POST",
+
+    //                 url: "<?php echo base_url(); ?>save_trans/"+sale_id,
+
+    //                 data: formData,
+
+    //                 success:function(data)
+
+    //                 {
+
+    //                     console.log(data);
+
+    //                     //window.location.href= "<?php echo base_url(); ?>/transportal"; 
+
+    //                 }
+
+    //                 })
+    //         }
+
+    $(document).ready(function () {
+
+        // $('#save').click(function() {
+
+        //     var formData = $("#formSubmit").serialize();
+
+        //     var sale_id = $('#saleid').val();
+        //     var pod = $('#pod').val();
+
+        //     console.log(pod)
+
+        //     $('#top-modal').modal('hide');
+
+        //     $.ajax({
+
+        //         method: "POST",
+
+        //         url: "<?php echo base_url(); ?>save_trans/"+sale_id,
+
+        //         data: formData,
+
+        //         // method: 'POST',
+
+        //         success:function(data)
+
+        //         {
+
+        //             console.log(data);
+
+        //             //window.location.href= "<?php echo base_url(); ?>/transportal"; 
+
+        //         }
+
+        //     })
+
+        // });
+        $('#save').click(function() {
+            var formData = new FormData($("#podform")[0]);
+            var sale_id = $('#saleid').val();
+
+            var pod = $('.pod').val();
+
+            $('#top-modal').modal('hide');
+
+            if(pod === '')
+            {
+                return;
+            }
+            else
+            {
+            
+                $.ajax({
+
+                    method: "POST",
+                    url: "<?php echo base_url(); ?>?/save_trans/"+sale_id,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success:function(data)
+                    {
+                        console.log(data);
+                        window.location.href= "<?php echo base_url(); ?>?/transportal"; 
+                    }
+
+                })
+            }
+        });
+
+    });
+
+
+
+</script>
+
+
 
 </body>
 

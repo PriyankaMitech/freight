@@ -177,7 +177,6 @@
                                     $income = 0;
 
                                     if(!empty($getSales)){
-                                        // echo "<pre>";print_r($getSales);exit();
 
                                         foreach($getSales as $sales){ ?>
 

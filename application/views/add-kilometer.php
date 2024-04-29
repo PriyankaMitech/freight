@@ -53,7 +53,22 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <!-- <h4 class="card-title">Basic Info</h4> -->
+                                    <form action="?/Phpspreadsheet/uploadfile" method="post" name="frmExcelImport" id="kilometerfile" enctype="multipart/form-data">
+
+                                        <div class="mb-5">
+
+                                            <label>Choose File</label> 
+
+                                            <input type="file" name="file" id="file" accept=".xlsx">
+
+                                            <button type="submit" id="submit" name="import" class="btn btn-primary">Import</button>
+
+                                    
+
+                                        </div>
+
+                                    </form>
+                                    <h4 class="card-title text-center">OR</h4>
                                     <form action="<?php echo base_url(); ?>?/home/save_kilometer" method="post">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -102,7 +117,27 @@
 
 <?php $this->load->view('partials/vendor-scripts') ?>
 <script>
+    $(document).ready( function(){
+        $('#submit').click(function(){
+            var formData = $('#kilometerfile').serialize()
+            alert(formData)
+            $.ajax({
+                url: "Phpspreadsheet/uploadfile",
+                type: "POST",
+                method: "POST",
+                data: formData,
+                dataType: "JSON",
+                success: function(response){
+                    console.log(response)
+                    
+                },
+                error: function(response){
+                    console.log(response)
+                }
 
+            })
+        })
+    })
 </script>
 </body>
 
