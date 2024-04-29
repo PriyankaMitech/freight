@@ -69,24 +69,15 @@ class Phpspreadsheet extends CI_Controller {
 				$error = '';
 				while (($getData1 = fgetcsv($csvFile1, 10000, ",")) !== FALSE)
 				{
-					// echo $getData1[21];
-					// echo "<pre>";print_r($getData1);exit();
-
 					if (empty($getData1[21])) {
 						$error = "LR Number is not available in the CSV file. Please provide LR Number for all records.";
 						if ($error != '')
 						{
 							$this->session->set_flashdata('error', $error);
-							fclose($csvFile1);  // Close the file before redirecting
 							return redirect('sales_register');
 						}
 					}
-
-					// Rest of your code...
-				
-
-	
-				 	$contractData = $this->Mymodel->contractdatacheck($getData1[26],$getData1[5]);
+					$contractData = $this->Mymodel->contractdatacheck($getData1[26],$getData1[5]);
 					$kilometerData = $this->Mymodel->kilometerdatacheck($getData1[5]);
 					$duplicateData = $this->Mymodel->duplicatedatacheck($getData1[2]);
 					if($contractData == null)
@@ -124,12 +115,9 @@ class Phpspreadsheet extends CI_Controller {
 					
 				
 				}
-				fclose($csvFile1);  // Close the file after the loop
+				fclose($csvFile1);
+				// print_r($csvFile1);die;
 
-				if ($errorOccurred) {
-					return redirect('sales_register');
-				}
-				
 				$csvFile = fopen($_FILES['file']['tmp_name'], 'r');
 				fgetcsv($csvFile);
 				while (($getData = fgetcsv($csvFile, 10000, ",")) !== FALSE)

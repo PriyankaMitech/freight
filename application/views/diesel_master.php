@@ -160,27 +160,27 @@
 
  
 
-												<li><a href="<?=base_url();?>transport_master" >Transporter Master</a></li>
+												<li><a href="?/home/transport_master" >Transporter Master</a></li>
 
 
 
-                                                <li><a href="<?=base_url();?>vehicle_master" >Vehicle Master</a></li>  
+                                                <li><a href="?/home/vehicle_master" >Vehicle Master</a></li>  
 
 
 
-                                                <li><a href="<?=base_url();?>contract_master">Contract Master</a></li>        
+                                                <li><a href="?/home/contract_master">Contract Master</a></li>        
 
 
 
-                                                <li><a href="<?=base_url();?>zone_master" >Zone Master</a></li>    
+                                                <li><a href="?/home/zone_master" >Zone Master</a></li>    
 
 
 
-                                                <li><a href="<?=base_url();?>diesel_master" class="active">Diesel Master</a></li>
+                                                <li><a href="?/home/diesel_master" class="active">Diesel Master</a></li>
 
 
 
-                                                <li><a href="<?=base_url();?>kilometer_master" >Kilometer Master</a></li>
+                                                <li><a href="?/home/kilometer_master" >Kilometer Master</a></li>
 
 
 
@@ -220,7 +220,7 @@
 
                             
 
-                            <a href="<?php echo base_url(); ?><?=base_url();?>add_dieselrate" class="bt">
+                            <a href="<?php echo base_url(); ?>?/home/add_dieselrate" class="bt">
 
 
 

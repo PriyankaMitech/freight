@@ -260,7 +260,7 @@
 
 
 
-                            <a href="<?=base_url();?>add-transporter" class="tn">
+                            <a href="add-transporter" class="tn">
 
 
 

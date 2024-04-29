@@ -166,8 +166,6 @@ class UserModel extends CI_Model {
             'VEHICLE_NAME'   => $postData['name'],
             'VEHICLE_AVERAGE'    => $postData['average'],
             'VEHICLE_LOAD_ABILITY'   => $postData['loadability'],
-            'detention_amount'   => $postData['detention_amount'],
-
             'CREATED_AT' => date("Y-m-d H:i:s"),
             'IS_ACTIVE'  => 'Y',
             'IS_DELETED' => 'N',
@@ -181,8 +179,6 @@ class UserModel extends CI_Model {
                 'VEHICLE_NAME'   => $postData['name'],
                 'VEHICLE_AVERAGE'    => $postData['average'],
                 'VEHICLE_LOAD_ABILITY'   => $postData['loadability'],
-                'detention_amount'   => $postData['detention_amount'],
-
                 'UPDATED_AT' => date("Y-m-d H:i:s"),
                 'IS_ACTIVE'  => 'Y',
                 'IS_DELETED' => 'N',
@@ -229,7 +225,7 @@ class UserModel extends CI_Model {
     public function Master_LR()
     {
         $this->db->select('MAX(ID) as ID,MAX(LR_NO) as LR_NO');
-        $row = $this->db->from('transinvoice')->group_by('LR_NO')->get()->result(); 
+        $row = $this->db->from('tbl_sales')->group_by('LR_NO')->get()->result(); 
         
         // echo '<pre>';print_r($row);die;
         if ($row != '') {
@@ -239,19 +235,29 @@ class UserModel extends CI_Model {
         }
     }
 
+
+
+    // public function delete_LR_NO($id)
+    // {
+    //     $decoded_id = base64_decode($id);
+
+    //     // echo "$decoded_id";exit();
+    //     $this->db->where('LR_NO',$decoded_id);
+    //     $this->db->delete('tbl_sales');
+    // }
+
     public function delete_LR_NO($id)
-    {
-        $decoded_id = base64_decode($id);
-    
-        // Delete from the 'transinvoice' table
-        $this->db->where('LR_NO', $decoded_id);
-        $this->db->delete('transinvoice');
-    
-        // Delete from the 'tbl_sales' table
-        $this->db->where('LR_NO', $decoded_id);
-        $this->db->delete('tbl_sales');
-    }
-    
+{
+    $decoded_id = base64_decode($id);
+
+    // Delete from the 'transinvoice' table
+    $this->db->where('LR_NO', $decoded_id);
+    $this->db->delete('transinvoice');
+
+    // Delete from the 'tbl_sales' table
+    $this->db->where('LR_NO', $decoded_id);
+    $this->db->delete('tbl_sales');
+}
 
     public function saveDieselrate($postData, $id)
     {
@@ -375,6 +381,24 @@ class UserModel extends CI_Model {
         print_r($row);die;
     }
 
+    // public function getSAP($whereCond) {
+        
+    //     $this->db->select(' (TR.LR_NO),TR.STATUS, SA.ID as sapid,TR.BILL_DT as BILL_DT, SA.VEH_NAME,  SA.VEH_NO,  SA.COUNTRY_KEY,  SA.INCOTERMS,  SA.GST_NO_SOLD,  SA.GST_NO_SHIP,  SA.STATE_NM_SOLD');
+    //     $this->db->where($whereCond);
+    //     $this->db->join('tbl_sales SA', 'TR.SALES_ID=SA.ID');
+    //     $this->db->group_by('TR.LR_NO');
+    //     $this->db->group_by('TR.STATUS');
+    //     $query = $this->db->from('TRANSINVOICE TR')->get();
+ 
+    //     if($query->num_rows() > 0){
+    //         $result = $query->result_array();
+    //         return $result;
+    //     }
+    //     else{
+    //         return false;
+    //     }
+    // }
+
     public function getSAP($whereCond) {
         $this->db->select('(TR.LR_NO), TR.STATUS, MAX(SA.ID) as sapid, MAX(TR.BILL_DT) as BILL_DT, MAX(SA.VEH_NAME), MAX(SA.VEH_NO), MAX(SA.COUNTRY_KEY), MAX(SA.INCOTERMS), MAX(SA.GST_NO_SOLD), MAX(SA.GST_NO_SHIP), MAX(SA.STATE_NM_SOLD)');
     
@@ -397,7 +421,6 @@ class UserModel extends CI_Model {
             return false;
         }
     }
-    
 
     public function getSAPwithid($ID, $STATUS) {
         $query = $this->db->query(
@@ -574,7 +597,6 @@ class UserModel extends CI_Model {
     public function uploadCsvFile($query)
     {
         // if ($id == '') {
-            // echo '<pre>';print_r($query1);
             // $sql = "INSERT INTO tbl_test ([Transporter ID], [Transporter],[STP Code],[STP Name],[STP Location],[Billing Doc],[Billing Date],[LR.No],[Mns Transty],[Dist. Km],[Contract Rate],[Fuel Average],[Diesel Cost],[% Cost],[Freight Total],[Total bill Qty],[Box Qty]) VALUES $query";
             //$insert = $this->db->insert('tbl_test', $query);
 
@@ -587,7 +609,6 @@ class UserModel extends CI_Model {
 
             $sale_id =   $this->db->insert_id();
 
-            
             $date = str_replace('/', '-', $query[1]);
 
             $bill = date("Y-m-d H:i:s", strtotime($date));
@@ -647,8 +668,7 @@ class UserModel extends CI_Model {
         $query[36]=str_replace(',', '', $query[36]);
         $query[37]=str_replace(',', '', $query[37]);
         $query[38]=str_replace(',', '', $query[38]);
-        $budget_insert = $this->db->query("INSERT INTO BUDGET (HIE_M_ID,YEAR, JAN,FEB,MAR,APR,MAY,JUN,JUL,AUG,SEP,OCT,NOV,`DEC`,INCOT,PACK_SIZE,BOX_QTY,CONS_SIZE,FRT_PER_C,HIKE,FRT_PER_C_T, JAN_QTY,FEB_QTY,MAR_QTY,APR_QTY,MAY_QTY,JUN_QTY,JUL_QTY,AUG_QTY,SEP_QTY,OCT_QTY,NOV_QTY,`DEC_QTY`,SOLD_TO_PARTY) VALUES ('".$query[1]."','".$query[7]."', '".$query[8]."', '".$query[9]."', '".$query[10]."', '".$query[11]."', '".$query[12]."', '".$query[13]."', '".$query[14]."' , '".$query[15]."', '".$query[16]."', '".$query[17]."', '".$query[18]."', '".$query[19]."', '".$query[21]."', '".$query[22]."','".$query[20]."', '".$query[23]."', '".$query[24]."', '".$query[25]."', '".$query[26]."', '".$query[27]."', '".$query[28]."', '".$query[29]."', '".$query[30]."', '".$query[31]."', '".$query[32]."', '".$query[33]."', '".$query[34]."', '".$query[35]."', '".$query[36]."', '".$query[37]."', '".$query[38]."', '".$query[3]."')");
-
+            $budget_insert = $this->db->query("INSERT INTO BUDGET (HIE_M_ID,YEAR, JAN,FEB,MAR,APR,MAY,JUN,JUL,AUG,SEP,OCT,NOV,DEC,INCOT,PACK_SIZE,BOX_QTY,CONS_SIZE,FRT_PER_C,HIKE,FRT_PER_C_T, JAN_QTY,FEB_QTY,MAR_QTY,APR_QTY,MAY_QTY,JUN_QTY,JUL_QTY,AUG_QTY,SEP_QTY,OCT_QTY,NOV_QTY,DEC_QTY,SOLD_TO_PARTY) VALUES ('".$query[1]."','".$query[7]."', '".$query[8]."', '".$query[9]."', '".$query[10]."', '".$query[11]."', '".$query[12]."', '".$query[13]."', '".$query[14]."' , '".$query[15]."', '".$query[16]."', '".$query[17]."', '".$query[18]."', '".$query[19]."', '".$query[21]."', '".$query[22]."','".$query[20]."', '".$query[23]."', '".$query[24]."', '".$query[25]."', '".$query[26]."', '".$query[27]."', '".$query[28]."', '".$query[29]."', '".$query[30]."', '".$query[31]."', '".$query[32]."', '".$query[33]."', '".$query[34]."', '".$query[35]."', '".$query[36]."', '".$query[37]."', '".$query[38]."', '".$query[3]."')");
 
             if ($budget_insert) {
                 $this->session->set_flashdata('success', 'Excel Data Imported into the Database..!');

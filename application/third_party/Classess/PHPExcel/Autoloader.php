@@ -35,6 +35,7 @@ PHPExcel_Shared_String::buildCharacterSets();
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
+ #[\AllowDynamicProperties]
 class PHPExcel_Autoloader
 {
     /**
@@ -70,7 +71,6 @@ class PHPExcel_Autoloader
         $pClassFilePath = PHPEXCEL_ROOT .
             str_replace('_', DIRECTORY_SEPARATOR, $pClassName) .
             '.php';
-
         if ((file_exists($pClassFilePath) === false) || (is_readable($pClassFilePath) === false)) {
             // Can't load
             return false;

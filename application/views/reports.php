@@ -3,13 +3,6 @@
 <html lang="en">
 
 <head>
-    <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- DataTables CSS and JS -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
 
     <?php $title_meta ?>
 
@@ -52,7 +45,7 @@
             </div>
                 <div class="row">
 
-                    <?php //print_r($end_date);die;?>
+                    <?php //print_r($start_date);die;?>
                 	<form action="<?php echo base_url(); ?>?/reports" method="post">
                     <div class="row align-items-center form-group ">
 
@@ -93,7 +86,7 @@
 
                                 <div class="form-custom cal-icon">
 
-                                <input class="form-control datetimepicker" type="text" name="start_date" placeholder="Start Date" value="<?php echo isset($start_date) ? $start_date : date('Y-m-d'); ?>">
+                                    <input class="form-control datetimepicker" type="text" name="start_date" placeholder="Start Date" value="<?php echo isset($start_date) ? $start_date : date('Y-m-d'); ?>">
 
                                 </div>
 
@@ -371,7 +364,7 @@
 		                if(!empty($getCost)){
 
 		                    
-
+                            // echo "<pre>";print_r($getCost);exit();
 		                    foreach($getCost as $cost){
 
 		                        if (is_numeric($cost['DETENTION'])) {
@@ -706,73 +699,33 @@
 						    </tr>
 						</table>
 					</div>
-
-                    <div class="card card-table w-auto"> 
-
-
-
+                    <div class="card card-table w-auto">
                         <div class="card-body">
-
-
-
                             <div class="table-scroll">
-
-
-
                                 <table id="<?php echo ($report != 'transport')? '' : $report ?>" class="table table-striped table-hover datatable table-bordered" style="font-size: 14px;">
-
-
-
                                     <thead class="thead-light">
-
-
-
                                         <tr>
-
-
-
-                                        <th>Transporter Name</th>
-
-
-
-                                        <th>Code</th> 
-
-                                        
-
-                                        <th>No. Vehicles Placed</th>
-
-
-
-                                        <th>Delay in delivery</th>
-
-                                        
-
-                                        <th>Billing Amount</th>
-
-
-
-                                        <th>Unbilled</th>
-
-
-
-                                        <th>%</th>
-
-
-
+                                            <th>Transporter Name</th>
+                                            <th>Code</th> 
+                                            <th>No. Vehicles Placed</th>
+                                            <th>Delay in delivery</th>
+                                            <th>Billing Amount</th>
+                                            <th>Unbilled</th>
+                                            <th>%</th>
                                         </tr>
-
-
-
                                     </thead>
-
-
-
                                     <tbody>
 
                                         
                                     <?php //echo '<pre>'; print_r($getTransporter);die;
                                         if(!empty($getTransporter)){
                                         foreach($getTransporter as $gtrans) { 
+                                            $unbill= $gtrans['TOTAL_Val'] + $gtrans['DETENTION'] + $gtrans['OTHCHRGS'];
+                                            $totalbill = number_format(round($TotalBillingAmount));
+                                            $percentage = 100/$TotalBillingAmount*$unbill;
+                                            // print_r(number_format(($percentage), 2));
+                                            // echo number_format(((number_format(round($TotalBillingAmount))*$unbill)*100), 2); 
+                                            // die;
                                     ?>
                                     <tr>
                                         <td><?php echo $gtrans['TRANS_NAME']; ?></td>
@@ -787,7 +740,9 @@
 
                                         <td><?php echo number_format($gtrans['TOTAL_V']) ; ?></td>
 
-                                        <td><?php echo ($gtrans['vehiclecount']) ? number_format((($gtrans['PENALTY']/$gtrans['vehiclecount'])*100), 2): 0; ?>% </td>
+                                        <!-- <td><?php //echo ($gtrans['vehiclecount']) ? number_format((($gtrans['PENALTY']/$gtrans['vehiclecount'])*100), 2): 0; ?>% </td> -->
+                                        
+                                        <td><?php echo ($gtrans['vehiclecount']) ? number_format(($percentage), 2): 0; ?>% </td>
 
                                     </tr>
 
@@ -1399,7 +1354,7 @@
 						</table>
 					</div>
 
-                    <div class="card card-table" style="width:100% !important;"> 
+                    <div class="card card-table" style="width:90% !important;"> 
 
 
 
@@ -1424,7 +1379,6 @@
 
 
                                         <th>Sold To Party</th>
-                                        <th>LR.N</th>
 
 
 
@@ -1496,10 +1450,6 @@
 
                                                 <?php echo $BudgetvsActual['SOLD_TO_PARTY']; ?></td>
 
-                                                <td>
-
-<?php echo $BudgetvsActual['LR_No']; ?></td>
-
 
                                             <td>
 
@@ -1534,7 +1484,11 @@
                                                 
                                             <td>
 
-                                                <?php echo number_format($actualfright=$BudgetvsActual['Rate']+ $BudgetvsActual['DETENTION'] + $BudgetvsActual['OTHCHRGS']);  ?> </td>
+                                                <?php 
+                                                // echo $BudgetvsActual['Rate'];
+                                                // echo $BudgetvsActual['DETENTION'];
+                                                // $BudgetvsActual['OTHCHRGS'];
+                                                echo number_format($actualfright=$BudgetvsActual['Rate']+ $BudgetvsActual['DETENTION'] + $BudgetvsActual['OTHCHRGS']);  ?> </td>
 
                                             <td>
 
@@ -1578,9 +1532,9 @@
                     <?php
                         $TotalRate = 0;
                         $TotalFREIGHT_T = 0;
-                         $dieseldata = 0;
                         $dieseldatatotal=0;
                         $dieseldatain=0;
+                        $dieseldata = 0;
                         if(!empty($getdieselCost)){
 
                         foreach($getdieselCost as $dieselCostwith){
@@ -1598,8 +1552,8 @@
                                 $TotalRate += 0;
 
                             }
-                           
                             if($dieselCostwith['VEHICLE_AVERAGE'] != 0){
+
                             $dieseldata= ($dieselCostwith['kilometer']/$dieselCostwith['VEHICLE_AVERAGE']) * $dieselCostwith['Dieselrate'];
                             $dieseldatatotal+= ($dieselCostwith['kilometer']/$dieselCostwith['VEHICLE_AVERAGE']) * $dieselCostwith['Dieselrate'];
                             }
@@ -1805,13 +1759,12 @@
                                                 <td>
 
                                                     <?php 
-                                                       if($dieselCost['VEHICLE_AVERAGE'] != 0){
+                                                        if($dieselCost['VEHICLE_AVERAGE'] != 0){
                                                     echo number_format((($dieselCost['kilometer']/$dieselCost['VEHICLE_AVERAGE']) * $dieselCost['Dieselrate']), 2);
-                                                    $dieseldata=  ($dieselCost['kilometer']/$dieselCost['VEHICLE_AVERAGE']) * $dieselCost['Dieselrate']; } else {
-                                                    
+                                                    $dieseldata=  ($dieselCost['kilometer']/$dieselCost['VEHICLE_AVERAGE']) * $dieselCost['Dieselrate'];
+                                                    }else{
                                                         echo $dieseldata = 0;
-                                                    }
-                                                    ?></td>
+                                                    } ?></td>
 
                                                 <td>
 
@@ -1880,13 +1833,12 @@
                                 $TotalRate += 0;
 
                             }
-                         if($dieselCostwith['VEHICLE_AVERAGE'] != 0){
-
+                            if($dieselCostwith['VEHICLE_AVERAGE'] != 0){
                            $dieseldata += ($dieselCostwith['kilometer']/$dieselCostwith['VEHICLE_AVERAGE']) * $dieselCostwith['Dieselrate'];
 
                            $dieseldata1 = ($dieselCostwith['kilometer']/$dieselCostwith['VEHICLE_AVERAGE']) * $dieselCostwith['Dieselrate'];
-                         }
-                     
+                            }
+
                            $data += ($dieselCostwith['Rate'])? ((($dieseldata1/$dieselCostwith['Rate'])*100)) : 0;
                            
                             if($TotalRate ==0){
@@ -1898,7 +1850,7 @@
 
                             
                              
-          
+
                             if (is_numeric($dieselCostwith['Rate']) || is_numeric($dieselCostwith['TOTAL_VAL'])) {
 
                                 $TotalFREIGHT_T += ($dieselCostwith['TOTAL_VAL'])? ($dieselCostwith['DETENTION'] + $dieselCostwith['OTHCHRGS']+ ($dieselCostwith['TOTAL_VAL'])) : ($dieselCostwith['DETENTION'] + $dieselCostwith['OTHCHRGS']+ ($dieselCostwith['Rate']));
@@ -1956,7 +1908,7 @@
 
 
 
-                                <table id="<?php echo ($report != 'dieselWithFreight')? '' : $report ?>" class="table table-striped table-hover datatable table-bordered" style="font-size: 14px; overflow-x:auto;">
+                                <table id="<?php echo ($report != 'dieselWithFreight')? '' : $report ?>" class="table table-striped table-hover datatable table-bordered" style="font-size: 14px;">
 
 
 
@@ -2109,15 +2061,15 @@
 
                                             <td>
 
-                                                <?php 
-                                                if($dieselCostwithfreight['VEHICLE_AVERAGE'] != 0){
+                                                <?php
+                                                if($dieselCostwithfreight['VEHICLE_AVERAGE'] != 0 ){
                                                 echo $dieseldata= number_format(($dieselCostwithfreight['kilometer']/$dieselCostwithfreight['VEHICLE_AVERAGE']) * $dieselCostwithfreight['Dieselrate'], 2);
-                                                $dieseldata= ($dieselCostwithfreight['kilometer']/$dieselCostwithfreight['VEHICLE_AVERAGE']) * $dieselCostwithfreight['Dieselrate']; 
-                                            }else{
-                                                echo $dieseldata = 0;
-                                            }
+                                                $dieseldata= ($dieselCostwithfreight['kilometer']/$dieselCostwithfreight['VEHICLE_AVERAGE']) * $dieselCostwithfreight['Dieselrate'];
+                                                }else{
+                                                    echo $dieseldata = 0;  
+                                                }
                                                 ?></td>
-                                                
+
                                             <td>
 
                                                 <?php echo ($dieselCostwithfreight['Rate'])? (number_format((($dieseldata/$dieselCostwithfreight['Rate'])*100), 2)."%") : ("0%"); ?></td>
@@ -2132,7 +2084,9 @@
 
                                             <td>
 
-                                            <?php echo $dieselCostwithfreight['BOX_QTY_T']; ?></td>
+                                            <?php echo $dieselCostwithfreight['BOX_QTY_T']; ?>
+                                    
+                                        </td>
 
 
 

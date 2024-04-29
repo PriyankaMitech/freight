@@ -56,11 +56,10 @@ class Home extends CI_Controller {
 			$whereCon .= " and TR.BILL_DT <= CONVERT(datetime, '".$end_date."' , 103)";
             $data['end_date'] = $this->input->post('end_date');
         }
-		// echo "hiii";exit();
-		$getDetentio = $this->ReportModel->getDetention();
+		$getDetentio = $this->ReportModel->getDetention($whereCon);
 		$getTransporter = $this->ReportModel->getTransporter($whereCon);
 		// echo 'pre';die;
-		// echo "string".$this->db->last_query();die();
+		//echo "string".$this->db->last_query();die();
 		$getCustomer = $this->ReportModel->getCustomer($whereCon);
 		$getCostvsRecovery = $this->ReportModel->getCostvsRecovery($whereCon);	
 		$getData = $this->TransportModel->getDetention();
@@ -364,10 +363,18 @@ class Home extends CI_Controller {
 			'getlr'     => $getData
 
 		];
+	
         $this->load->view('Delete_lrno', $data);
     }
 
-		public function delete_LR_NO()
+
+	// public function delete_LR_NO($id)
+	// {
+	// 	$deleteData = $this->UserModel->delete_LR_NO($id);
+	// 	return redirect('Home/Master_LR');
+	// }
+
+	public function delete_LR_NO()
 		{
 			$id = $this->uri->segment(2);
 
@@ -375,6 +382,7 @@ class Home extends CI_Controller {
 			$deleteData = $this->UserModel->delete_LR_NO($id);
 			return redirect('delete_lr');
 		}
+	
 	
 	public function add_dieselrate()
     {
@@ -593,52 +601,56 @@ class Home extends CI_Controller {
 	}
 
 	public function cost_statement()
-{
-    $data = [
-        'title_meta' => ['title' => 'Cost allocation screen'],
-        'title' => 'Cost allocation screen'
-    ];
-    $data['trans_name'] = '';
-    $data['start_date'] = '';
-    $data['end_date'] = '';
+	{
+		$data = [
+			'title_meta' => ['title' => 'Cost allocation screen'],
+			'title' => 'Cost allocation screen'
+		];
+		$data['trans_name']='';
+		$data['start_date']='';
+		$data['end_date']='';
 
-    if (isset($_POST['submit'])) {
-        $postData = $this->input->post();
-        $getData = $this->TransportModel->save_trans_knowoff($postData);
-    }
+		if(isset($_POST['submit']))
+		{
+			$postData = $this->input->post();
+		 	$getData = $this->TransportModel->save_trans_knowoff($postData);
+		}
 
-    $whereCon = "TR.STATUS != 'K'";
+		$whereCon = ("TR.STATUS != 'K'");
+		if ($this->input->post('trans_name') != '' && $this->input->post('trans_name') != 'Select Transport') {
+            
+            //$whereCon = array_merge($whereCon, array('SA.TRANS_NAME'=>$this->input->post('trans_name')));
+			$whereCon .= " and SA.TRANS_NAME = '".$this->input->post('trans_name')."'";
+            $data['trans_name'] = $this->input->post('trans_name');
+        }
 
-    if ($this->input->post('trans_name') != '' && $this->input->post('trans_name') != 'Select Transport') {
-        $whereCon .= " and SA.TRANS_NAME = '" . $this->input->post('trans_name') . "'";
-        $data['trans_name'] = $this->input->post('trans_name');
-    }
-
-    if ($this->input->post('start_date') != '') {
-        $start_date = date('d/m/Y', strtotime($this->input->post('start_date')));
-        $whereCon .= " and TR.BILL_DT >= STR_TO_DATE('" . $start_date . "', '%d/%m/%Y')";
-        $data['start_date'] = $this->input->post('start_date');
-    }
-
-    if ($this->input->post('end_date') != '') {
-        $end_date = date('d/m/Y', strtotime($this->input->post('end_date')));
-        $whereCon .= " and TR.BILL_DT <= STR_TO_DATE('" . $end_date . "', '%d/%m/%Y')";
-        $data['end_date'] = $this->input->post('end_date');
-    }
-
-    $data['getData'] = $this->UserModel->getSAP($whereCon);
-    $data['getTRANS_NAME'] = $this->UserModel->getdistinctvalue();
-
-    $this->load->view('cost_statement', $data);
-}
-
+		if ($this->input->post('start_date') != '') {
+            // $start_date = date('y/m/d',strtotime($this->input->post('start_date')));
+			$start_date = date('y-m-d',strtotime($this->input->post('start_date')));
+			// $whereCon .= " and TR.BILL_DT >= CONVERT(datetime, '".$start_date."' , 103)";
+			$whereCon .= " and TR.BILL_DT >= '".$start_date."' ";
+            $data['start_date'] = $this->input->post('start_date');
+        }
+        if ($this->input->post('end_date') != '') {
+            // $end_date=date('y/m/d',strtotime($this->input->post('end_date')));
+			$end_date=date('y-m-d',strtotime($this->input->post('end_date')));
+            // $whereCon .= " and TR.BILL_DT <= CONVERT(datetime, '".$end_date."' , 103)";
+			$whereCon .= " and TR.BILL_DT <= '".$end_date."' ";
+            $data['end_date'] = $this->input->post('end_date');
+        }
+		
+		$data['getData'] = $this->UserModel->getSAP($whereCon);
+		// echo '<pre>';print_r($data);die;
+		//echo $this->db->last_query();die();
+		$data['getTRANS_NAME'] = $this->UserModel->getdistinctvalue();
+		$this->load->view('cost_statement', $data);
+	}
 
 	public function getSAPwithid()
 	{
 		$id = $_POST["Id"];
 		$STATUS = $_POST["STATUS"];
 		$getData = $this->UserModel->getSAPwithid($id,$STATUS);
-		// echo "<pre>";print_r($getData);exit();
 		echo json_encode($getData);
 	}
 

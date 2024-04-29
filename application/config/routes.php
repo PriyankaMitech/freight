@@ -11,9 +11,8 @@ $route['Logout'] = 'login/Logout';
 $route['dashboard'] = 'home/dashboard';
 $route['transcred'] = 'home/transcred';
 $route['transportal'] = 'transport/transportal';
-$route['download/(:any)'] = 'transport/download/$1';
 $route['transHistory'] = 'transport/transHistory';
-$route['transport_master'] = 'Home/transport_master';
+$route['transport_master'] = 'home/transport_master';
 $route['vehicle_master'] = 'Home/vehicle_master';
 
 $route['contract_master'] = 'Home/contract_master';
@@ -33,9 +32,6 @@ $route['add-transporter'] = 'Home/add_transporter';
 $route['save_transporter'] = 'Home/save_transporter';
 $route['edit_transporter/(:any)'] = 'Home/edit_transporter/$1';
 $route['delete_transporter/(:any)'] = 'Home/delete_transporter/$1';
-
-$route['delete_lr'] = 'Home/Master_LR';
-$route['delete_LR_NO/(:any)'] = 'Home/delete_LR_NO/$1s';
 
 $route['add_vehicle'] = 'Home/add_vehicle';
 $route['save_vehicle'] = 'Home/save_vehicle';
@@ -61,12 +57,18 @@ $route['budgetupload'] = 'Phpspreadsheet/budgetupload';
 $route['cost_statement'] = 'Home/cost_statement';
 
 $route['excel'] = 'Home/excel';
+$route['export_excel/(:any)'] = 'Report/export_excel/$1';
 
 $route['save_trans_knowoff'] = 'Transport/save_trans_knowoff';
 $route['save_trans/(:any)'] = 'Transport/save_trans/$1';
+$route['edit_trans/(:any)'] = 'Transport/edit_trans/$1';
 $route['TransView'] = 'Transport/TransView';
+$route['download/(:any)'] = 'Transport/download/$1';
 
 $route['ChangePassword'] = 'home/ChangePassword';
-$route['savepassword'] = 'home/save_password';
+$route['save_password'] = 'home/save_password';
+
+$route['delete_lr'] = 'Home/Master_LR';
+$route['delete_LR_NO/(:any)'] = 'Home/delete_LR_NO/$1';
 
 

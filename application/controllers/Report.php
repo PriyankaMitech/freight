@@ -10,145 +10,148 @@ class Report extends CI_Controller {
         $this->load->model('UserModel');
         $this->load->model('TransportModel');
         $this->load->model('ReportModel');
-        // $this->load->library('Spreadsheet');
-        if(!$this->session->userdata('isLoggedIn'))
-        redirect(base_url("?/Login"));
-
+		// $this->load->library('Spreadsheet');
+		if(!$this->session->userdata('isLoggedIn'))
+            redirect(base_url("?/Login"));
+        
     }
 
-
+    
 
     public function index()
-    {
-        $start_date='';
-        $end_date='';
-        //$whereCon = array('TR.STATUS !=' => '');
-        $whereCon = ("TR.STATUS != ''");
-        $report='';
 
-        $getDetentio= array();
+	{	
+		$start_date='';
+		$end_date='';		
+		//$whereCon = array('TR.STATUS !=' => '');
+		$whereCon = ("TR.STATUS != ''");
+		$report='';
 
-        $getTransporter= array();
+		$getDetentio= array();
 
-        $getCustomer= array();
+		$getTransporter= array();
 
-        $getCostvsRecovery= array();
+		$getCustomer= array();
 
-        $getBudgetvsActual= array();
+		 $getCostvsRecovery= array();
 
-        $getCost= array();
+		$getBudgetvsActual= array();
 
-        $getdieselCost= array();
+		$getCost= array();
 
-        $getdieselCostwithfreight= array();
+		$getdieselCost= array();
 
-        $getvehicleutil= array();
+		$getdieselCostwithfreight= array();
 
-        $getfreight= array();
+		$getvehicleutil= array();
 
-        if($this->input->post('report') != ''){
-            $report=$this->input->post('report');
-        }
-        if ($this->input->post('start_date') != '') {
+		$getfreight= array();
+
+		if($this->input->post('report') != ''){
+			$report=$this->input->post('report');
+		}
+		if ($this->input->post('start_date') != '') {
             $start_date = date('y-m-d',strtotime($this->input->post('start_date')));
-            $month=strtoupper(date('M',strtotime($this->input->post('start_date'))));
-            $whereCon1 = "B.YEAR = ".date('Y',strtotime($this->input->post('start_date')));
-            // print_r($start_date);die;
+			$month=strtoupper(date('M',strtotime($this->input->post('start_date'))));
+			$whereCon1 = "B.YEAR = ".date('Y',strtotime($this->input->post('start_date')));
+			// print_r($start_date);die;
             // $whereCon = array_merge($whereCon, array('TR.BILL_DT >='=> CONVERT(datetime, $start_date , 103) ));
-            $whereCon .= " and TR.BILL_DT >= '".$start_date."' ";
+			$whereCon .= " and TR.BILL_DT >= '".$start_date."' ";
             $data['start_date'] = $this->input->post('start_date');
         }
-        else{
-            $month=strtoupper(date('M'));
-            $whereCon1="B.YEAR = ".date('Y');
-        }
+		else{
+			$month=strtoupper(date('M'));
+			$whereCon1="B.YEAR = ".date('Y');
+		}
         if ($this->input->post('end_date') != '') {
             $end_date=date('y-m-d',strtotime($this->input->post('end_date')));
             //$whereCon = array_merge($whereCon, array('TR.BILL_DT <= '=> CONVERT(datetime, date('d/m/Y',strtotime($this->input->post('end_date'))), 103) ));
-            $whereCon .= " and TR.BILL_DT <= '".$end_date."' ";
-            // print_r($end_date);die;
+			$whereCon .= " and TR.BILL_DT <= '".$end_date."' ";
+			// print_r($end_date);die;
             $data['end_date'] = $this->input->post('end_date');
         }
-        if($report=='detention')
-            $getDetentio = $this->ReportModel->getDetention($whereCon);
-        if($report=='transport')
-            $getTransporter = $this->ReportModel->getTransporter($whereCon);
-        if($report=='Customer')
-            $getCustomer = $this->ReportModel->getCustomer($whereCon);
-        if($report=='CostvsRecovery')
-            $getCostvsRecovery = $this->ReportModel->getCostvsRecovery($whereCon);
-        if($report=='BudgetvsActual')
-            $getBudgetvsActual = $this->ReportModel->getBudgetvsActual($whereCon1,$whereCon,$month);
-        if($report=='cost')
-            $getCost = $this->ReportModel->getCost($whereCon);
+		if($report=='detention')
+		$getDetentio = $this->ReportModel->getDetention($whereCon);
+		if($report=='transport')
+		$getTransporter = $this->ReportModel->getTransporter($whereCon);
+		// echo "<pre>";print_r($getTransporter);die();
+		if($report=='Customer')
+		$getCustomer = $this->ReportModel->getCustomer($whereCon);
+		// echo "<pre>";print_r($getCustomer);die();
 
-        // echo "string".$this->db->last_query();die();
-        if($report=='dieselCost')
-            $getdieselCost = $this->ReportModel->getdieselCost($whereCon);
-                    // echo "<pre>";print_r($getdieselCost);die();
+		if($report=='CostvsRecovery')
+		$getCostvsRecovery = $this->ReportModel->getCostvsRecovery($whereCon);
+	// echo "<pre>";print_r($getCostvsRecovery);die();
+		if($report=='BudgetvsActual')
+		$getBudgetvsActual = $this->ReportModel->getBudgetvsActual($whereCon1,$whereCon,$month);
+			// echo "<pre>";print_r($getBudgetvsActual);die();
 
-        if($report=='dieselWithFreight')
-            $getdieselCostwithfreight = $this->ReportModel->getdieselCostwithfreight($whereCon);
-                // echo "<pre>";print_r($getdieselCostwithfreight);die();
+		if($report=='cost')
+		$getCost = $this->ReportModel->getCost($whereCon);
+			// echo "<pre>";print_r($getCost);die();
+		// echo "string".$this->db->last_query();die();
+		if($report=='dieselCost')
+		$getdieselCost = $this->ReportModel->getdieselCost($whereCon);
 
-        if($report=='vehicleUtilization')
-            $getvehicleutil = $this->ReportModel->getvehicleutil($whereCon);
+					// echo "<pre>";print_r($getdieselCost);die();
 
-                    // echo "<pre>";print_r($getvehicleutil);exit();
- 
-        if($report=='freight')
-            $getfreight = $this->ReportModel->getfreight($whereCon);
+	//echo "string".$this->db->last_query();die();
+		if($report=='dieselWithFreight')
+		$getdieselCostwithfreight = $this->ReportModel->getdieselCostwithfreight($whereCon);
+		// echo "<pre>";print_r($getdieselCostwithfreight);die();
+		if($report=='vehicleUtilization')
+		$getvehicleutil = $this->ReportModel->getvehicleutil($whereCon);
+		if($report=='freight')
+		$getfreight = $this->ReportModel->getfreight($whereCon);
+		// echo "string".$this->db->last_query();die();
 
-        // echo "<pre>";print_r($getfreight);exit();
-        // echo "string".$this->db->last_query();die();
+		$start_date_input = $this->input->post('start_date');
+		$end_date_input = $this->input->post('end_date');
 
-            $start_date_input = $this->input->post('start_date');
-            $end_date_input = $this->input->post('end_date');
+		// Check if the input values are not null before using strtotime
+		$start_date_formatted = $start_date_input ? date('d-m-y', strtotime($start_date_input)) : '';
+		$end_date_formatted = $end_date_input ? date('d-m-y', strtotime($end_date_input)) : '';
 
-            // Check if the input values are not null before using strtotime
-            $start_date_formatted = $start_date_input ? date('d-m-y', strtotime($start_date_input)) : '';
-            $end_date_formatted = $end_date_input ? date('d-m-y', strtotime($end_date_input)) : '';
+		$data = [
 
-            $data = [
+			'title_meta' =>  ['title' => 'Dashboard'],
 
-                'title_meta' => ['title' => 'Dashboard'],
+			'page_title' => ['title' => 'Dashboard', 'li_1' => 'SmartHr', 'li_2' => 'Dashboard'],
 
-                'page_title' => ['title' => 'Dashboard', 'li_1' => 'SmartHr', 'li_2' => 'Dashboard'],
+			'report' => $report,
+			
+			'getSales'     => $getDetentio,
 
-                'report' => $report,
+			'getTransporter'     => $getTransporter,
 
-                'getSales' => $getDetentio,
+			'getCustomer'     => $getCustomer,
 
-                'getTransporter' => $getTransporter,
+			'getCostvsRecovery'     => $getCostvsRecovery,
 
-                'getCustomer' => $getCustomer,
+			'getBudgetvsActual'     => $getBudgetvsActual,
 
-                'getCostvsRecovery' => $getCostvsRecovery,
+			'getCost'     => $getCost,
 
-                'getBudgetvsActual' => $getBudgetvsActual,
+			'getdieselCost'     => $getdieselCost,
 
-                'getCost' => $getCost,
+			'getdieselCostwithfreight'     => $getdieselCostwithfreight,
 
-                'getdieselCost' => $getdieselCost,
+			'getvehicleutil'     => $getvehicleutil,
 
-                'getdieselCostwithfreight' => $getdieselCostwithfreight,
+			'getfreight'     => $getfreight,
 
-                'getvehicleutil' => $getvehicleutil,
+			'end_date' => $end_date_formatted,
 
-                'getfreight' => $getfreight,
+            'start_date' => $start_date_formatted
 
-                'end_date' => $end_date_formatted,
+		];
 
-                'start_date' => $start_date_formatted
+		// echo "<pre>"; print_r($getfreight);die;
 
-            ];
-            // echo "<pre>";
-            // print_r($getCost);die;
+		$this->load->view('reports', $data);
 
-        $this->load->view('reports', $data);
-
-    }
+	}
 
 
-
+	
 }

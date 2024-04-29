@@ -100,9 +100,9 @@
 
 
 
-                                            <li><a href="<?=base_url();?>home/budget_up" class="active">Budget Upload</a></li>
+                                            <li><a href="?/home/budget_up" class="active">Budget Upload</a></li>
 
-                                           
+
 
                                             <!-- <li><a href="vehicle_master" >Unlock Budget</a></li>   -->
 
@@ -160,7 +160,7 @@
 
 
 
-                    <form action="<?=base_url();?>Phpspreadsheet/budgetupload" method="post" name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
+                    <form action="?/Phpspreadsheet/budgetupload" method="post" name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
 
                         <div>
 

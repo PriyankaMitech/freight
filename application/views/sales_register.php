@@ -104,7 +104,7 @@
 
 
 
-                                               <li><a href="transport-master" class="active">Sales Register Upload</a></li>
+                                               <li><a href="sales_register" class="active">Sales Register Upload</a></li>
 
 
 
@@ -160,7 +160,7 @@
 
 
 
-                        <form action="<?=base_url(); ?>/Phpspreadsheet/salesregisterupload" method="post" name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
+                        <form action="?/Phpspreadsheet/salesregisterupload" method="post" name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
 
                             <div>
 

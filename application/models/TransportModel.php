@@ -3,35 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class TransportModel extends CI_Model {
 
-    public function getSales($whereCon) {
-        $query = $this->db->query(
-            "SELECT MAX(TR.ID) as ID, MAX(TR.LR_NO) as LR_NO, MAX(SA.NAME_SHIP_PARTY) as NAME_SHIP_PARTY,
-             MAX(SA.LCN_SHIP_PARTY) as LCN_SHIP_PARTY, MAX(TR.BILL_DT) as BILL_DT, 
-             MAX(TR.BILL_QTY_T) as BILL_QTY_T, MAX(TR.BOX_QTY_T) as BOX_QTY_T ,
-             MAX(SA.VEH_NAME) as VEH_NAME, MAX(SA.VEH_NO) as VEH_NO, MAX(SA.COUNTRY_KEY) as COUNTRY_KEY,
-             MAX(SA.INCOTERMS) as INCOTERMS, MAX(TR.VENDOR) as VENDOR, MAX(TR.TRANS_NAME) as TRANS_NAME, 
-             MAX(SA.GST_NO_SOLD) as GST_NO_SOLD, MAX(SA.GST_NO_SHIP) as GST_NO_SHIP, MAX(SA.STATE_NM_SOLD) as STATE_NM_SOLD, 
-             MAX(TR.SALES_ID) as SALES_ID, MAX(TR.REP_DT) as REP_DT, MAX(TR.UNL_DT) as UNL_DT, MAX(C.Rate) as Rate 
-            FROM TRANSINVOICE TR 
-            JOIN tbl_sales SA ON TR.SALES_ID = SA.ID AND TR.STATUS = 'N' 
-            JOIN tbl_contract C ON C.Vehicle_Name = SA.VEH_NAME 
-            WHERE $whereCon 
-            GROUP BY TR.LR_NO"
-        );
-    
-        if ($query->num_rows() > 0) {
-            $result = $query->result_array();
-            return $result;
-        } else {
-            return false;
-        }
-    }
-    
-    
-
-
     // public function getSales($whereCon) {
-    
     //     $query = $this->db->query(
     //         "SELECT MAX(TR.ID) as ID, MAX(TR.LR_NO) as LR_NO, MAX(SA.NAME_SHIP_PARTY) as NAME_SHIP_PARTY,
     //          MAX(SA.LCN_SHIP_PARTY) as LCN_SHIP_PARTY, MAX(TR.BILL_DT) as BILL_DT, 
@@ -43,17 +15,10 @@ class TransportModel extends CI_Model {
     //         FROM TRANSINVOICE TR 
     //         JOIN tbl_sales SA ON TR.SALES_ID = SA.ID AND TR.STATUS = 'N' 
     //         JOIN tbl_contract C ON C.Vehicle_Name = SA.VEH_NAME 
-    //         WHERE TR.STATUS != '' 
-
+    //         WHERE $whereCon 
     //         GROUP BY TR.LR_NO"
     //     );
-    
-    //     // Check for errors
-    //     if ($this->db->error()) {
-    //         log_message('error', 'Database Error: ' . $this->db->error()['message']);
-    //         return false;
-    //     }
-    
+
     //     if ($query->num_rows() > 0) {
     //         $result = $query->result_array();
     //         return $result;
@@ -61,8 +26,52 @@ class TransportModel extends CI_Model {
     //         return false;
     //     }
     // }
+    public function getSales($whereCon) {
+        $query = $this->db->query(
+            "SELECT 
+                MAX(TR.ID) as ID, 
+                MAX(TR.LR_NO) as LR_NO, 
+                MAX(SA.NAME_SHIP_PARTY) as NAME_SHIP_PARTY,
+                MAX(SA.LCN_SHIP_PARTY) as LCN_SHIP_PARTY, 
+                MAX(TR.BILL_DT) as BILL_DT, 
+                MAX(TR.BILL_QTY_T) as BILL_QTY_T, 
+                MAX(TR.BOX_QTY_T) as BOX_QTY_T,
+                MAX(SA.VEH_NAME) as VEH_NAME, 
+                MAX(SA.VEH_NO) as VEH_NO, 
+                MAX(SA.COUNTRY_KEY) as COUNTRY_KEY,
+                MAX(SA.INCOTERMS) as INCOTERMS, 
+                MAX(TR.VENDOR) as VENDOR, 
+                MAX(TR.TRANS_NAME) as TRANS_NAME, 
+                MAX(SA.GST_NO_SOLD) as GST_NO_SOLD, 
+                MAX(SA.GST_NO_SHIP) as GST_NO_SHIP, 
+                MAX(SA.STATE_NM_SOLD) as STATE_NM_SOLD, 
+                MAX(TR.SALES_ID) as SALES_ID, 
+                MAX(TR.REP_DT) as REP_DT, 
+                MAX(TR.UNL_DT) as UNL_DT, 
+                IF((TIMESTAMPDIFF(DAY, MAX(TR.REP_DT), MAX(TR.UNL_DT))) > 0, TIMESTAMPDIFF(DAY, MAX(TR.REP_DT), MAX(TR.UNL_DT)), 0) as delaydays, 
+                MAX(CA.Rate) as Rate,  -- Added this line for Rate
+                MAX(TR.TOTAL_VAL) as TOTAL_VAL
+            FROM 
+                TRANSINVOICE TR 
+            JOIN 
+                tbl_sales SA ON TR.SALES_ID = SA.ID AND TR.STATUS = 'N' 
+            JOIN 
+                tbl_contract CA ON CA.Destination = SA.LCN_SHIP_PARTY AND CA.Vehicle_Name = SA.VEH_NAME  -- Modified this line
+            WHERE 
+                $whereCon 
+            GROUP BY 
+                TR.LR_NO"
+        );
     
-
+        if ($query->num_rows() > 0) {
+            $result = $query->result_array();
+            return $result;
+        } else {
+            return false;
+        }
+    }
+    
+    
     public function save_trans($postData, $id)
     // {
     //     // print_r($postData);die;
@@ -207,34 +216,14 @@ class TransportModel extends CI_Model {
             $pena = ($BILL_DT - $Transit_Time) * 1500;
             $PENALTY = ($BILL_DT > $Transit_Time) ? $pena : 0 ;
 
-            // $datetime1 = new DateTime($postData['REPORT_DATE'].' '.$postData['REPORT_TIME']);
-            // $datetime2 = new DateTime($postData['RELEASE_DATE'].' '.$postData['RELEASE_TIME']);
-            // $interval = $datetime1->diff($datetime2);
-            // $DETENTION= ($interval->format('%d'));
-            // // $dete=($DETENTION - 1) * 1500;
-            // $dete=($DETENTION ) * 1500;
-            // $DETENTION = ($DETENTION > 1) ? $dete : 0 ;
-            // // print_r($dete);die;
-
-            // echo $postData['REPORT_DATE'];
-            // echo $postData['REPORT_TIME'];
-
-            // echo $postData['RELEASE_DATE'];
-
-            // echo $postData['RELEASE_TIME'];
-
-
-
             $datetime1 = new DateTime($postData['REPORT_DATE'].' '.$postData['REPORT_TIME']);
             $datetime2 = new DateTime($postData['RELEASE_DATE'].' '.$postData['RELEASE_TIME']);
             $interval = $datetime1->diff($datetime2);
-            $DETENTION = $interval->format('%a');  // Use %a for days
-            $dete = $DETENTION * 1500;
-            $DETENTION = ($DETENTION >= 1) ? $dete : 0;
-            
-            // Debugging output
-            var_dump($DETENTION);
-            
+            $DETENTION= ($interval->format('%d'));
+            // $dete=($DETENTION - 1) * 1500;
+            $dete=($DETENTION ) * 1500;
+            $DETENTION = ($DETENTION >= 1) ? $dete : 0 ;
+            // print_r($dete);die;
             
         }
 
@@ -579,9 +568,6 @@ class TransportModel extends CI_Model {
             return false;
         }
     }
-
-
-    
     
     
     public function getDetention() {

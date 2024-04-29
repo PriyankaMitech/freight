@@ -102,7 +102,11 @@
 
                                                     <td class="text-end">
 
+                                                        <!-- <a href="<?= base_url('?/Home/Delete_LR_NO/'.base64_encode($lr->LR_NO)) ?>" id="<?php echo base64_encode($lr->LR_NO) ?>" name="delete" type="" onclick="return confirm('Are you sure?');"><i class="far fa-trash-alt me-2"></i>Delete</a> -->
+
+
                                                         <a href="<?= base_url() ?>delete_LR_NO/<?php echo base64_encode($lr->LR_NO) ;?>"  name="delete" type="" onclick="return confirm('Are you sure?');"><i class="far fa-trash-alt me-2"></i>Delete</a>
+
 
                                                     </td>
 
@@ -141,7 +145,7 @@
 
 
 
-    <?php $this->load->view('partials/vendor-scripts') ?>
+<?php $this->load->view('partials/footer') ?>
 
 <script>
     function deleteFunction(id) {

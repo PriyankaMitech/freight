@@ -1195,7 +1195,6 @@
                                             $income = 0;
 
                                             if(!empty($getCostvsRecovery)){
-                                                // echo "<pre>";print_r($getCostvsRecovery);exit();
 
                                             foreach($getCostvsRecovery as $CostvsRecovery){
 
