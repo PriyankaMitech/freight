@@ -205,7 +205,7 @@
                                                     <!-- <td></td>
                                                     <td></td>
                                                     <td></td> -->
-                                                    <td >Total:</td>
+                                                   <td> Contract Freight : </td>
                                                     <td><input type="text" name="total" class="total"></td>
                                                 </tr>
                                                 <tr style="background-color: #d7f1ee;">
@@ -268,7 +268,7 @@
                                                 <tr style="background-color: #d7f1ee;">
                                                     <td colspan="2">Bill No :</td>
                                                     <td colspan="5"><input type="text" name="BILLING_DOC" class="BILLING_DOC"> </td>
-                                                    <td>Billed Charges:</td>
+                                                    <td>Total Freight Charges :</td>
                                                     <td><input type="text" name="bill_charge" class="bill_charge" value="0"></td>
                                                 </tr>
                                                 <tr style="background-color: #d7f1ee;">
