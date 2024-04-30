@@ -43,6 +43,26 @@ class Transport extends CI_Controller {
 	
 		$this->load->view('transportal', $data);
 	}
+	public function get_sales(){
+		$whereCon = "TR.STATUS != ''";
+		$start_date = '';
+		$end_date = '';
+	
+		if ($this->input->post('start_date') != '') {
+			$start_date = date('d/m/Y', strtotime($this->input->post('start_date')));
+			$whereCon .= " AND TR.BILL_DT >= STR_TO_DATE('$start_date', '%d/%m/%Y')";
+		}
+	
+		if ($this->input->post('end_date') != '') {
+			$end_date = date('d/m/Y', strtotime($this->input->post('end_date')));
+			$whereCon .= " AND TR.BILL_DT <= STR_TO_DATE('$end_date', '%d/%m/%Y')";
+		}
+	
+		$getData = $this->TransportModel->getSales($whereCon);
+
+		header('Content-Type: application/json');
+		echo json_encode($getData);
+	}
     
     public function transHistory()
 	{

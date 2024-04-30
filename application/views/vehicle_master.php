@@ -255,6 +255,9 @@
 
                                                    <th>Loadability</th>
 
+                                                   <th>Detention amount</th>
+
+
                                                    <th class="text-end">Action</th>
 
                                                 </tr>
@@ -284,6 +287,7 @@
                                                     <td><span class="badge bg-success-light"></span><?php echo $vehicle->VEHICLE_LOAD_ABILITY; ?></td>
 
 
+                                                    <td><?php echo $vehicle->detention_amount; ?></td>
 
                                                     <td class="text-end">
 
