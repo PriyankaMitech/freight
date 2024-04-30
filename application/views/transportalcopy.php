@@ -236,7 +236,129 @@
 
                                         <tbody>
 
-                                            
+                                            <?php 
+                                            if(!empty($getSales)){
+
+                                                $i = 1; ?>
+
+                                                <?php foreach($getSales as $sales){
+
+                                            ?>
+
+                                            <tr>
+
+                                                <td>
+
+                                                    <input type="hidden" class="SALES_ID/<?php echo $i ?>" name="SALE_ID" value="<?php echo $sales['ID'] ?>">
+
+                                                    <input type="radio" name="radio_release" value="<?php echo $sales['ID'] ?>"  data-bs-toggle="modal" data-bs-target="#top-modal1"></td>
+
+                                                <td>
+
+                                                    <input type="hidden" name="LR_NO" value="<?php echo $sales['LR_NO'] ?>">
+
+                                                    <?php echo $sales['LR_NO']; ?></td>
+
+
+
+                                                <td>
+
+                                                    <input type="hidden" name="BILL_DT" value="<?php echo $sales['BILL_DT'] ?>">
+
+                                                    <?php echo $sales['BILL_DT']; ?></td>
+
+                                                <td>
+
+                                                    <input type="hidden" name="NAME_SHIP_PARTY" value="<?php echo $sales['NAME_SHIP_PARTY'] ?>">
+
+                                                    <?php echo $sales['NAME_SHIP_PARTY']; ?> 
+                                                </td>
+
+                                                <td>
+
+                                                    <input type="hidden" name="LCN_SHIP_PARTY" value="<?php echo $sales['LCN_SHIP_PARTY'] ?>">
+
+                                                    <?php echo $sales['LCN_SHIP_PARTY']; ?> 
+                                                </td>
+
+
+
+                                                <td>
+
+                                                    <input type="hidden" name="BILL_QTY" value="<?php echo $sales['BILL_QTY_T'] ?>">
+
+                                                    <?php echo $sales['BILL_QTY_T']; ?> </td>
+
+                                                
+
+                                                <td>
+
+                                                    <input type="hidden" name="BOX_QTY_T" value="<?php echo $sales['BOX_QTY_T'] ?>">
+
+                                                    <?php echo $sales['BOX_QTY_T']; ?></td>
+
+                                                <td>
+
+                                                    <input type="hidden" name="INCOTERMS" value="<?php echo $sales['INCOTERMS'] ?>">
+
+                                                    <?php echo $sales['INCOTERMS']; ?></td>
+
+                                                <td>
+
+                                                    <input type="hidden" name="VEH_NAME" value="<?php echo $sales['VEH_NAME'] ?>">
+
+                                                    <?php echo $sales['VEH_NAME']; ?> </td>
+
+                                                <td>
+
+                                                    <input type="hidden" name="VEH_NO" value="<?php echo $sales['VEH_NO'] ?>">
+
+                                                    <?php echo $sales['VEH_NO']; ?> </td>
+
+                                                <td>
+
+                                                    <input type="hidden" name="GST_NO_SOLD" value="<?php echo $sales['GST_NO_SOLD'] ?>">
+
+                                                    <?php echo $sales['GST_NO_SOLD']; ?> </td>
+
+                                                <td>
+
+                                                    <input type="hidden" name="GST_NO_SHIP" value="<?php echo $sales['GST_NO_SHIP'] ?>">
+
+                                                    <?php echo $sales['GST_NO_SHIP']; ?> </td>
+
+                                                <td>
+
+
+                                                    <?php echo ($sales['TOTAL_VAL'])? number_format($sales['TOTAL_VAL']) :  number_format($sales['Rate']); ?>
+                                                    </td>
+                                                <td>
+
+                                                    <input type="hidden" name="REP_DT" value="<?php echo $sales['REP_DT'] ?>">
+
+                                                    <?php echo $sales['REP_DT']; ?></td>
+
+                                                <td>
+
+                                                    <input type="hidden" name="UNL_DT" value="<?php echo $sales['UNL_DT'] ?>">
+
+                                                    <?php echo $sales['UNL_DT']; ?></td>
+
+
+
+                                            </tr>
+
+                                            <?php $i++; }  ?>
+                                  
+
+
+                                            <?php }else{ ?>
+                                                <tr >
+                                                <td class="text-center" colspan= 14 >No Data Found</td>
+                                            </tr>
+
+                                                <?php } ?>
+
 
 
                                         </tbody>
@@ -384,7 +506,6 @@
 <script>
 
     $('input[name="radio_release"]').click(function() {
-        alert("Hiii");
 
         if($(this).is(':checked')) {
 
@@ -506,107 +627,6 @@
     });
 
 
-
-</script>
-
-<script>
-  $(document).ready(function() {
-    // Function to retrieve sales data without refreshing the page
-    function getSalesData() {
-        alert("hiii");
-        $.ajax({
-            url: '<?=base_url();?>get_sales', // URL to fetch sales data
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                // Clear existing table rows
-                $('tbody').empty();
-
-                console.log(response);
-                // Check if data is available
-                if (response.length > 0) {
-                    // Loop through each sales record and append to the table
-                    $.each(response, function(index, sales) {
-                        $('tbody').append(
-                            `<tr>
-                                <td>
-                                    <input type="hidden" class="SALES_ID/${index}" name="SALE_ID" value="${sales.ID}">
-                                    <input type="radio" name="radio_release" value="${sales.ID}" data-bs-toggle="modal" data-bs-target="#top-modal1">
-                                    
-                                </td>
-                                <td>
-                                    <input type="hidden" name="LR_NO" value="${sales.LR_NO}">
-                                    ${sales.LR_NO}
-                                </td>
-                                <td>
-                                    <input type="hidden" name="BILL_DT" value="${sales.BILL_DT}">
-                                    ${sales.BILL_DT}
-                                </td>
-                                <td>
-                                    <input type="hidden" name="NAME_SHIP_PARTY" value="${sales.NAME_SHIP_PARTY}">
-                                    ${sales.NAME_SHIP_PARTY}
-                                </td>
-                                <td>
-                                    <input type="hidden" name="LCN_SHIP_PARTY" value="${sales.LCN_SHIP_PARTY}">
-                                    ${sales.LCN_SHIP_PARTY}
-                                </td>
-                                <td>
-                                    <input type="hidden" name="BILL_QTY" value="${sales.BILL_QTY_T}">
-                                    ${sales.BILL_QTY_T}
-                                </td>
-                                <td>
-                                    <input type="hidden" name="BOX_QTY_T" value="${sales.BOX_QTY_T}">
-                                    ${sales.BOX_QTY_T}
-                                </td>
-                                <td>
-                                    <input type="hidden" name="INCOTERMS" value="${sales.INCOTERMS}">
-                                    ${sales.INCOTERMS}
-                                </td>
-                                <td>
-                                    <input type="hidden" name="VEH_NAME" value="${sales.VEH_NAME}">
-                                    ${sales.VEH_NAME}
-                                </td>
-                                <td>
-                                    <input type="hidden" name="VEH_NO" value="${sales.VEH_NO}">
-                                    ${sales.VEH_NO}
-                                </td>
-                                <td>
-                                    <input type="hidden" name="GST_NO_SOLD" value="${sales.GST_NO_SOLD}">
-                                    ${sales.GST_NO_SOLD}
-                                </td>
-                                <td>
-                                    <input type="hidden" name="GST_NO_SHIP" value="${sales.GST_NO_SHIP}">
-                                    ${sales.GST_NO_SHIP}
-                                </td>
-                                <td>
-                                    ${sales.TOTAL_VAL ?sales.TOTAL_VAL : sales.Rate}
-                                </td>
-                                <td>
-                                    <input type="hidden" name="REP_DT" value="${sales.REP_DT}">
-                                    ${sales.REP_DT}
-                                </td>
-                                <td>
-                                    <input type="hidden" name="UNL_DT" value="${sales.UNL_DT}">
-                                    ${sales.UNL_DT}
-                                </td>
-                            </tr>`
-                        );
-                    });
-                } else {
-                    // If no data is available, display a message
-                    $('tbody').append('<tr><td colspan="14" class="text-center">No Data Found</td></tr>');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                // Handle error
-            }
-        });
-    }
-
-    // Call the function to retrieve sales data when the page loads
-    getSalesData();
-});
 
 </script>
 

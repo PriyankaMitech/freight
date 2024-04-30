@@ -81,7 +81,7 @@
 
                                 <option value="vehicleUtilization" <?php echo ($report == 'vehicleUtilization')? 'Selected' : '' ?>>Vehicle Utilization</option>
 
-                                <option value="freight" <?php echo ($report == 'freight')? 'Selected' : '' ?>>Freight</option>
+                                <option value="freight" <?php echo ($report == 'freight')? 'Selected' : '' ?>>Contract Freight</option>
 
                         </select>
 
@@ -458,16 +458,16 @@
                                             <th>Billing Doc</th>
                                             <th>Bill Date</th>
                                             <th>Reference No.</th>
-                                            <th>Lr No</th>
+                                            <th>LR. No.</th>
                                             <th>Vehicle No</th>
                                             <th>Type</th>
                                             <th>Box qty</th>
                                             <th>Delay</th>
                                             <th>Penalty</th>
-                                            <th>Freight</th>
+                                            <th>Contract Freight</th>
                                             <th>Detention</th>
                                             <th>Other Cost</th>
-                                            <th>Total Freight</th>
+                                            <th>Total Freight Charges</th>
                                             <th>Unbilled</th>
                                             <th>Reason</th>
                                         </tr>
@@ -1173,7 +1173,7 @@
 
                                         
 
-                                        <th>LR NO.</th>
+                                        <th>LR. No.</th>
 
 
 
@@ -1189,11 +1189,11 @@
 
 
 
-                                        <th>Freight Paid</th>
+                                        <th>Contract Freight Paid</th>
 
 
 
-                                        <th>Freight Recover</th>
+                                        <th>Contract Freight Recover</th>
 
 
 
@@ -1694,7 +1694,7 @@
 
 
 
-                                            <th>Lr No</th>
+                                            <th>LR. No.</th>
 
 
 
@@ -1710,7 +1710,7 @@
 
 
 
-                                            <th>Contract Amt</th>
+                                            <th>Contract Freight Amt</th>
 
 
 
@@ -1933,7 +1933,7 @@
 
                                 </tr>
                                 <tr>
-                                    <td class="Heading1">Freight Total</td>
+                                    <td class="Heading1">Total Freight Charges</td>
                                     <td class="HeadVal1"><?php echo number_format($TotalFREIGHT_T); ?></td>
 
                                 </tr>
@@ -1990,7 +1990,7 @@
 
 
 
-                                            <th>Lr No</th>
+                                            <th>LR. No.</th>
 
 
 
@@ -2006,7 +2006,7 @@
 
 
 
-                                            <th>Contract Amt</th>
+                                            <th>Contract Freight Amt</th>
 
 
 
@@ -2022,7 +2022,7 @@
 
 
 
-                                            <th>Freight Total</th>
+                                            <th>Total Freight Charges</th>
 
 
 
@@ -2237,7 +2237,7 @@
 
 
 
-                                            <th>Lr. No.</th>
+                                            <th>LR. No.</th>
 
 
 
@@ -2431,9 +2431,9 @@
                     <div class="NewHorizontalTable">
                         <table>
                             <tr>
-                                <td class="Heading1">Freight</td>
+                                <td class="Heading1">Contract Freight</td>
                                 <td class="HeadVal1"><?php echo number_format($TotalFREIGHT); ?></td>
-                                <td class="Heading1">Freight Total</td>
+                                <td class="Heading1">Total Freight Charges</td>
                                 <td class="HeadVal1"><?php echo number_format($TotalFREIGHT_T); ?></td>
 
                             </tr>
@@ -2500,15 +2500,15 @@
 
 
 
-                                            <th>Lr No. </th>
+                                            <th>LR. No. </th>
 
 
 
-                                            <th>Freight</th>
+                                            <th>Contract Freight</th>
 
 
 
-                                            <th>Freight Total</th>
+                                            <th>Total Freight Charges</th>
 
                                             <th>Other Charges</th>
 
