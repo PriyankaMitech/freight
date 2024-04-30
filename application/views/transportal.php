@@ -525,7 +525,6 @@
     $(document).on('click', 'input[name="radio_release"]', function() {
 
 
-        alert("Hiii");
 
         if($(this).is(':checked')) {
 
