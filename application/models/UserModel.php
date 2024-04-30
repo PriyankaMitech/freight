@@ -675,6 +675,7 @@ class UserModel extends CI_Model {
         $query[38]=str_replace(',', '', $query[38]);
         $budget_insert = $this->db->query("INSERT INTO BUDGET (HIE_M_ID,YEAR, JAN,FEB,MAR,APR,MAY,JUN,JUL,AUG,SEP,OCT,NOV,`DEC`,INCOT,PACK_SIZE,BOX_QTY,CONS_SIZE,FRT_PER_C,HIKE,FRT_PER_C_T, JAN_QTY,FEB_QTY,MAR_QTY,APR_QTY,MAY_QTY,JUN_QTY,JUL_QTY,AUG_QTY,SEP_QTY,OCT_QTY,NOV_QTY,`DEC_QTY`,SOLD_TO_PARTY) VALUES ('".$query[1]."','".$query[7]."', '".$query[8]."', '".$query[9]."', '".$query[10]."', '".$query[11]."', '".$query[12]."', '".$query[13]."', '".$query[14]."' , '".$query[15]."', '".$query[16]."', '".$query[17]."', '".$query[18]."', '".$query[19]."', '".$query[21]."', '".$query[22]."','".$query[20]."', '".$query[23]."', '".$query[24]."', '".$query[25]."', '".$query[26]."', '".$query[27]."', '".$query[28]."', '".$query[29]."', '".$query[30]."', '".$query[31]."', '".$query[32]."', '".$query[33]."', '".$query[34]."', '".$query[35]."', '".$query[36]."', '".$query[37]."', '".$query[38]."', '".$query[3]."')");
 
+
             if ($budget_insert) {
                 $this->session->set_flashdata('success', 'Excel Data Imported into the Database..!');
                 return $budget_insert;
