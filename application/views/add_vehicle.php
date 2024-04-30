@@ -148,6 +148,14 @@
 
                                                 </div>
 
+                                                <div class="form-group">
+
+                                                    <label>	Detention amount</label>
+
+                                                    <input type="text" name="detention_amount" class="form-control" value="<?php if(isset($edit)){ print_r($edit[0]['detention_amount']);}  ?>">
+
+                                                </div>
+
                                             </div>
 
                                         </div>

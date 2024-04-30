@@ -11,6 +11,8 @@ $route['Logout'] = 'login/Logout';
 $route['dashboard'] = 'home/dashboard';
 $route['transcred'] = 'home/transcred';
 $route['transportal'] = 'transport/transportal';
+$route['get_sales'] = 'Transport/get_sales';
+
 $route['transHistory'] = 'transport/transHistory';
 $route['transport_master'] = 'home/transport_master';
 $route['vehicle_master'] = 'Home/vehicle_master';

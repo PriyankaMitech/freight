@@ -237,7 +237,6 @@
                                         <tbody>
 
                                             <?php 
-                                            // echo '<pre>';print_r($getSales); 
                                             if(!empty($getSales)){
 
                                                 $i = 1; ?>
@@ -329,10 +328,7 @@
                                                     <?php echo $sales['GST_NO_SHIP']; ?> </td>
 
                                                 <td>
- <!--
-                                                    <input type="hidden" name="Rate" value="<?php //echo $sales['Rate'] ?>">
 
-                                                    <?php// echo number_format($sales['Rate']); ?>  -->
 
                                                     <?php echo ($sales['TOTAL_VAL'])? number_format($sales['TOTAL_VAL']) :  number_format($sales['Rate']); ?>
                                                     </td>
@@ -401,7 +397,7 @@
 
                                                 <input type="hidden" value="" id="saleid">
 
-                                                <input type="date" name="REPORT_DATE" id="REPORT_DATE" class="form-co">
+                                                <input type="date" name="REPORT_DATE" id="REPORT_DATE" class="form-co reodate">
 
                                                 <label for="">Time: </label>
 
@@ -417,7 +413,7 @@
 
                                                 <label for="">Releasing Date: </label>
 
-                                                <input type="date" name="RELEASE_DATE" class="form-co">
+                                                <input type="date" name="RELEASE_DATE" class="form-co rdate">
 
                                                 <label for="">Time: </label>
 
@@ -598,11 +594,13 @@
             var formData = new FormData($("#podform")[0]);
             var sale_id = $('#saleid').val();
 
-            var pod = $('.pod').val();
+            var rdate = $('.rdate').val();
+            var reodate = $('.reodate').val();
+
 
             $('#top-modal').modal('hide');
 
-            if(pod === '')
+            if(rdate === '' || reodate === '')
             {
                 return;
             }
