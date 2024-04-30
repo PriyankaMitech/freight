@@ -1424,7 +1424,6 @@
 
 
                                         <th>Sold To Party</th>
-                                        <th>LR.N</th>
 
 
 
@@ -1478,7 +1477,8 @@
 
                                     <tbody>
 
-                                        <?php //print_r($getSales); 
+                                        <?php 
+
 
                                             $i = 1;
 
@@ -1496,9 +1496,7 @@
 
                                                 <?php echo $BudgetvsActual['SOLD_TO_PARTY']; ?></td>
 
-                                                <td>
-
-<?php echo $BudgetvsActual['LR_No']; ?></td>
+                                               
 
 
                                             <td>
