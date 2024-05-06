@@ -608,9 +608,17 @@ class UserModel extends CI_Model {
             $FRT_AFT_ST=str_replace(',', '', $query[15]);
             $MAT_DESC=str_replace("'", "&#39;", $query[10]);
             $MAT_DESC=str_replace('"', '&#34;', $MAT_DESC);
+
+            
+            $date = str_replace('/', '-', $query[1]);
+
+            $bill = date("Y-m-d H:i:s", strtotime($date));
+
+            $qty=str_replace(',', '', $query[13]);
+            
             
 
-            $sales_insert = $this->db->query("INSERT INTO tbl_sales (BILLING_DOC, BILL_DT,REF_NO,SHIP_TO_PARTY,NAME_SHIP_PARTY,SOLD_TO_PARTY,LCN_SHIP_PARTY,NAME_SOLD_PARTY,LCN_SOLD_PARTY,MAT_NO,MAT_DESC,HIE_NO,HIE_DESC,BILL_QTY,BOX_QTY,FRT_AFT_ST,CITY,COUNTRY_KEY,INCOTERMS,VENDOR,TRANS_NAME,LR_NO,STATE_NM_SHIP,STATE_NM_SOLD,GST_NO_SOLD,GST_NO_SHIP,VEH_NAME,VEH_NO,STATUS) VALUES (".$query[0].", '".$query[1]."','".$query[2]."', '".$query[3]."','".$query[4]."', '".$query[6]."','".$query[5]."','".$query[7]."','".$query[8]."', '".$query[9]."','".$MAT_DESC."', '".$query[11]."','".$query[12]."', '".$query[13]."',".$query[14].",'".$FRT_AFT_ST."','".$query[16]."','".$query[17]."','".$query[18]."','".$query[19]."','".$query[20]."','".$query[21]."','".$query[22]."','".$query[23]."','".$query[24]."','".$query[25]."','".$query[26]."', '".$query[27]."','N')");
+            $sales_insert = $this->db->query("INSERT INTO tbl_sales (BILLING_DOC, BILL_DT,REF_NO,SHIP_TO_PARTY,NAME_SHIP_PARTY,SOLD_TO_PARTY,LCN_SHIP_PARTY,NAME_SOLD_PARTY,LCN_SOLD_PARTY,MAT_NO,MAT_DESC,HIE_NO,HIE_DESC,BILL_QTY,BOX_QTY,FRT_AFT_ST,CITY,COUNTRY_KEY,INCOTERMS,VENDOR,TRANS_NAME,LR_NO,STATE_NM_SHIP,STATE_NM_SOLD,GST_NO_SOLD,GST_NO_SHIP,VEH_NAME,VEH_NO,STATUS) VALUES (".$query[0].", '".$query[1]."','".$query[2]."', '".$query[3]."','".$query[4]."', '".$query[6]."','".$query[5]."','".$query[7]."','".$query[8]."', '".$query[9]."','".$MAT_DESC."', '".$query[11]."','".$query[12]."', '".$qty."',".$query[14].",'".$FRT_AFT_ST."','".$query[16]."','".$query[17]."','".$query[18]."','".$query[19]."','".$query[20]."','".$query[21]."','".$query[22]."','".$query[23]."','".$query[24]."','".$query[25]."','".$query[26]."', '".$query[27]."','N')");
 
             $sale_id =   $this->db->insert_id();
 

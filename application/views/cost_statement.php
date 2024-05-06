@@ -17,7 +17,6 @@
 
         .highlight1 { background-color: #00bfff !important; }
     </style>
-    
 </head>
 
 <?php $this->load->view('partials/body') ?>
@@ -74,44 +73,32 @@
                                 <div class="card-body">
 
                                     <div class="table-scroll">
-                                    <table id="data" class="table table-hover table-bordered">
 
-
-                                    <!-- <table id="data" class="table table-hover datatable table-bordered"> -->
+                                    <table id="data" class="table table-hover  table-bordered">
                                             <thead class="thead-light">
-
                                                 <tr>
-
-                                                <th>SAP Billing Date </th>
-
-                                                <th>Status</th>                       
-
-                                                <th class="text-end">LR NO</th>
-
+                                                    <th>SAP Billing Date</th>
+                                                    <th>Status</th>                       
+                                                    <th class="text-end">LR NO</th>
                                                 </tr>
-
                                             </thead>
-
                                             <tbody>
-                                                <?php //print_r($getData); 
-                                                if(!empty($getData)){
-                                                    $i=1;
-                                                    foreach($getData as $getd){
+                                                <?php
+                                                if (!empty($getData)) {
+                                                    $i = 1;
+                                                    foreach ($getData as $getd) {
+                                                        ?>
+                                                        <tr class="sap_id" data-id="<?php echo $i ?>" data-sapid="<?php echo $getd['LR_NO']; ?>" data-lr="<?php echo $getd['LR_NO']; ?>" data-STATUS="<?php echo $getd['STATUS']; ?>">
+                                                            <td><?php echo date('d-m-Y', strtotime($getd['BILL_DT'])); ?></td>
+                                                            <td><?php echo $getd['STATUS']; ?></td>
+                                                            <td class="text-end"><?php echo $getd['LR_NO']; ?></td>
+                                                        </tr>
+                                                        <?php $i++;
+                                                    }
+                                                }
                                                 ?>
-                                                <tr class="sap_id" data-id="<?php echo $i ?>" data-sapid="<?php echo $getd['LR_NO']; ?>" data-lr="<?php echo $getd['LR_NO']; ?>" data-STATUS="<?php echo $getd['STATUS']; ?>">
-                                                    <td><?php echo date('d-m-Y', strtotime($getd['BILL_DT'])); ?></td>
-
-                                                    <td><?php echo $getd['STATUS']; ?></td>
-
-                                                    <td class="text-end"><?php echo $getd['LR_NO']; ?></td>
-
-                                                </tr>
-                                                <?php $i++; } } ?>
-
                                             </tbody>
-
                                         </table>
-
                                     </div>
 
                                 </div>
@@ -205,7 +192,7 @@
                                                     <!-- <td></td>
                                                     <td></td>
                                                     <td></td> -->
-                                                   <td> Contract Freight : </td>
+                                                    <td >Total:</td>
                                                     <td><input type="text" name="total" class="total"></td>
                                                 </tr>
                                                 <tr style="background-color: #d7f1ee;">
@@ -268,7 +255,7 @@
                                                 <tr style="background-color: #d7f1ee;">
                                                     <td colspan="2">Bill No :</td>
                                                     <td colspan="5"><input type="text" name="BILLING_DOC" class="BILLING_DOC"> </td>
-                                                    <td>Total Freight Charges :</td>
+                                                    <td>Billed Charges:</td>
                                                     <td><input type="text" name="bill_charge" class="bill_charge" value="0"></td>
                                                 </tr>
                                                 <tr style="background-color: #d7f1ee;">
@@ -442,6 +429,8 @@
                         d.DETENTION=0;
                     }
                     PENALTY=parseInt(PENALTY) + parseInt(d.PENALTY);
+      
+
                     DETENTION=parseInt(DETENTION) + parseInt(d.DETENTION);
                     
                   });
@@ -490,7 +479,7 @@
           
         }
       });
-    //   calc_total()
+      calc_total()
     });
 
     
@@ -641,6 +630,9 @@
     }
 
 </script>
+
+
+
 
 
 
