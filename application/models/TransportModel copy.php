@@ -72,49 +72,46 @@ class TransportModel extends CI_Model {
     }
     
     
-  
     public function save_trans($postData, $id)
     {
-        // Retrieve detention amount based on matching VEHICLE_NAME
-        $query = $this->db->query("
-            SELECT TR.ID, SA.ID as sale_id, TR.BILL_DT, DETENTION, DETN_NOTE, SA.VENDOR, TR.BILL_QTY_T, TR.BOX_QTY_T, SA.VEH_NAME, SA.VEH_NO, SA.COUNTRY_KEY, SA.LCN_SHIP_PARTY, TR.VENDOR, TR.TRANS_NAME, SA.GST_NO_SOLD, SA.GST_NO_SHIP, SA.STATE_NM_SOLD, TR.SALES_ID, TR.REP_DT, TR.UNL_DT, VM.detention_amount
-            FROM TRANSINVOICE TR
-            JOIN tbl_sales SA ON TR.SALES_ID = SA.ID AND TR.ID = ".$id."
-            LEFT JOIN tbl_vehicle_master1 VM ON SA.VEH_NAME = VM.VEHICLE_NAME
-        ");
-    
-        // Initialize variables
-        $PENALTY = 0;
-        $DETENTION = 0;
-        $Transit_Time = 0;
-        $detentionAmount = 0;
-    
-        if ($query->num_rows() > 0) {
+        
+        // print_r($postData);die;
+        $query = $this->db->query(
+            "SELECT TR.ID,SA.ID as sale_id, TR.BILL_DT, DETENTION, DETN_NOTE, SA.VENDOR, TR.BILL_QTY_T ,TR.BOX_QTY_T ,SA.VEH_NAME, SA.VEH_NO, SA.COUNTRY_KEY, SA.LCN_SHIP_PARTY, TR.VENDOR, TR.TRANS_NAME, SA.GST_NO_SOLD, SA.GST_NO_SHIP, SA.STATE_NM_SOLD, TR.SALES_ID, TR.REP_DT, TR.UNL_DT  
+            from TRANSINVOICE TR join tbl_sales SA ON TR.SALES_ID=SA.ID and TR.ID=".$id." ");
+
+            // echo '<pre>';print_r($this->db->last_query());die;
+        $PENALTY=0;
+        $DETENTION=0;
+        $Transit_Time=0;
+        if($query->num_rows() > 0){
             $result = $query->row();
             $date = str_replace('-', '/', $result->BILL_DT);
+
             $bill = date("Y/m/d", strtotime($date));
             $datetime1 = new DateTime($bill." 07:00");
             $datetime2 = new DateTime($postData['REPORT_DATE'].' '.$postData['REPORT_TIME']);
             $interval = $datetime1->diff($datetime2);
            
-            $BILL_DT = ($interval->format('%d'));
+            //$BILL_DT= ($interval->format('%d')*24) + $interval->format('%H');
+            $BILL_DT= ($interval->format('%d'));
             $columndata = $this->db->query("SELECT transit_time FROM tbl_kilometer WHERE destination LIKE '%".$result->LCN_SHIP_PARTY."%'")->row();
+            //$Transit_Time = $columndata->transit_time * 24;
+            //echo $this->db->last_query();
             $Transit_Time = $columndata->transit_time;
             $pena = ($BILL_DT - $Transit_Time) * 1500;
             $PENALTY = ($BILL_DT > $Transit_Time) ? $pena : 0 ;
-    
+
             $datetime1 = new DateTime($postData['REPORT_DATE'].' '.$postData['REPORT_TIME']);
             $datetime2 = new DateTime($postData['RELEASE_DATE'].' '.$postData['RELEASE_TIME']);
             $interval = $datetime1->diff($datetime2);
-            $DETENTION = ($interval->format('%d'));
-            $dete = ($DETENTION) * $result->detention_amount;
+            $DETENTION= ($interval->format('%d'));
+            // $dete=($DETENTION - 1) * 1500;
+            $dete=($DETENTION ) * 1500;
             $DETENTION = ($DETENTION >= 1) ? $dete : 0 ;
-    
-                  // print_r($dete);die;
-            $detentionAmount = $result->detention_amount;
+            // print_r($dete);die;
+            
         }
-    
-       
 
         $query1 = $this->db->query("SELECT * from tbl_sales where ID ='".$result->sale_id."'");
 

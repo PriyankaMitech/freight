@@ -180,8 +180,16 @@ class Transport extends CI_Controller {
 		$postData = $this->input->post();
 		// echo "<pre>";print_r($postData);exit();
 		$getData = $this->TransportModel->save_temp_trans($postData);
-		echo $getData;
-	}
+		$getData = $this->TransportModel->save_temp_trans($postData);
+
+		// Return a response if needed (this depends on your application logic)
+		// Here, we are returning a JSON response with success status
+		$response = array(
+			'success' => true,
+			'message' => 'Data saved successfully' // You can customize the message
+		);
+		echo json_encode($response);
+		}
 
 	public function save_trans_knowoff()
 	{
