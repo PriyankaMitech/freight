@@ -513,7 +513,7 @@
     });
 
     $('.mytable').on('keyup', 'input.other_charge', function(){
-    calc_total('other_charge');
+    calc_total('other_charge' );
 });
 
     $(".DETENTION").on('keyup', function() {
