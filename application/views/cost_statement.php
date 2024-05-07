@@ -567,6 +567,7 @@
     });
 
     $('.mytable').on('keyup', 'input.other_charge', function(){
+
     calc_total();
 });
 
