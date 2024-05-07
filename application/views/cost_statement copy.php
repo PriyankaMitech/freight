@@ -16,39 +16,12 @@
         }
 
         .highlight1 { background-color: #00bfff !important; }
-
-
-        .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-    position: fixed; /* Position fixed to keep it on top of the content */
-    top: 50%; /* Center the loader vertically */
-    left: 50%; /* Center the loader horizontally */
-    transform: translate(-50%, -50%);
-    z-index: 9999; /* Set a high z-index to ensure it's on top of other elements */
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
-    display: none; /* Initially hidden */
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-
     </style>
-    
 </head>
 
 <?php $this->load->view('partials/body') ?>
 
-
     <div class="main-wrapper">
-
 
     <?php $this->load->view('partials/menu') ?>
 
@@ -58,10 +31,7 @@
 
 
             <div class="content container-fluid">
-
-            <form action="<?php echo base_url(); ?>?/cost_statement" method="post" >   
-            <div class="loader"></div>
-  
+            <form action="<?php echo base_url(); ?>?/cost_statement" method="post" >     
 
                 <div class="row align-items-center form-group ">
                     <div class="col-md-3">
@@ -103,44 +73,32 @@
                                 <div class="card-body">
 
                                     <div class="table-scroll">
-                                    <table id="data" class="table table-hover table-bordered">
 
-
-                                    <!-- <table id="data" class="table table-hover datatable table-bordered"> -->
+                                    <table id="data" class="table table-hover  table-bordered">
                                             <thead class="thead-light">
-
                                                 <tr>
-
-                                                <th>SAP Billing Date </th>
-
-                                                <th>Status</th>                       
-
-                                                <th class="text-end">LR NO</th>
-
+                                                    <th>SAP Billing Date</th>
+                                                    <th>Status</th>                       
+                                                    <th class="text-end">LR NO</th>
                                                 </tr>
-
                                             </thead>
-
                                             <tbody>
-                                                <?php //print_r($getData); 
-                                                if(!empty($getData)){
-                                                    $i=1;
-                                                    foreach($getData as $getd){
+                                                <?php
+                                                if (!empty($getData)) {
+                                                    $i = 1;
+                                                    foreach ($getData as $getd) {
+                                                        ?>
+                                                        <tr class="sap_id" data-id="<?php echo $i ?>" data-sapid="<?php echo $getd['LR_NO']; ?>" data-lr="<?php echo $getd['LR_NO']; ?>" data-STATUS="<?php echo $getd['STATUS']; ?>">
+                                                            <td><?php echo date('d-m-Y', strtotime($getd['BILL_DT'])); ?></td>
+                                                            <td><?php echo $getd['STATUS']; ?></td>
+                                                            <td class="text-end"><?php echo $getd['LR_NO']; ?></td>
+                                                        </tr>
+                                                        <?php $i++;
+                                                    }
+                                                }
                                                 ?>
-                                                <tr class="sap_id" data-id="<?php echo $i ?>" data-sapid="<?php echo $getd['LR_NO']; ?>" data-lr="<?php echo $getd['LR_NO']; ?>" data-STATUS="<?php echo $getd['STATUS']; ?>">
-                                                    <td><?php echo date('d-m-Y', strtotime($getd['BILL_DT'])); ?></td>
-
-                                                    <td><?php echo $getd['STATUS']; ?></td>
-
-                                                    <td class="text-end"><?php echo $getd['LR_NO']; ?></td>
-
-                                                </tr>
-                                                <?php $i++; } } ?>
-
                                             </tbody>
-
                                         </table>
-
                                     </div>
 
                                 </div>
@@ -211,7 +169,7 @@
                                                 <th colspan="2">Hierarchy</th>
                                                 <th>Billed Qty.</th>
                                                 <th>No.Boxes</th>
-                                                <th>Freight</th>
+                                                <th>Contract Freight</th>
                                                 <th>Other Charges</th>
                                             </thead>
                                             <tbody>
@@ -234,7 +192,7 @@
                                                     <!-- <td></td>
                                                     <td></td>
                                                     <td></td> -->
-                                                    <td >Total:</td>
+                                                    <td >Total Freight Charges:</td>
                                                     <td><input type="text" name="total" class="total"></td>
                                                 </tr>
                                                 <tr style="background-color: #d7f1ee;">
@@ -254,7 +212,7 @@
                                                     <input type="text" name="otherLoss" id="otherLoss" style='display:none;'/></td>
                                                     <!-- <td></td> -->
                                                     <td>Other Charges:</td>
-                                                    <td><input type="text" name="OTHCHRGS" class="OTHCHRGS" value="0" ></td>
+                                                    <td><input type="text" name="OTHCHRGS" class="OTHCHRGS" id="totalothercharges" value="0" ></td>
                                                 </tr>
                                                 <tr style="background-color: #d7f1ee;">
                                                     <td colspan="2">Penalty :</td>
@@ -338,8 +296,6 @@
         calc_total();
     });
     function calc_total(){
-        $('.loader').show();
-
         var sum = 0;calc_total
         $(".other_charge").each(function(){
             sum += parseFloat($(this).val());
@@ -359,29 +315,14 @@
                 SUBOTHCHRGS: $(this).val(),
                 tid: $(this).attr("data-id")
                 },
-                success: function (data) {
-                    // Hide the loader
-                    $('.loader').hide();
+                success: function(data) {
 
-                    // Handle the response data if needed
-                    console.log(data);
-                },
-                error: function () {
-                    // Hide the loader
-                    $('.loader').hide();
-
-                    // Handle errors if needed
-                    console.log('Error occurred');
                 }
-
              });
         });
         $('.OTHCHRGS').val(sum);
         var bill_charge = sum + parseInt($('.total').val()) + parseInt($('.DETENTION').val());
             $('.bill_charge').val(bill_charge);
-
-            
-
     }
     $(function() {
         //    $(".knockoff").click(function(){
@@ -485,6 +426,8 @@
                         d.DETENTION=0;
                     }
                     PENALTY=parseInt(PENALTY) + parseInt(d.PENALTY);
+      
+
                     DETENTION=parseInt(DETENTION) + parseInt(d.DETENTION);
                     
                   });
@@ -533,7 +476,7 @@
           
         }
       });
-    //   calc_total()
+      calc_total()
     });
 
     
@@ -567,7 +510,7 @@
     });
 
     $('.mytable').on('keyup', 'input.other_charge', function(){
-    calc_total();
+    calc_total('other_charge');
 });
 
     $(".DETENTION").on('keyup', function() {
@@ -684,6 +627,9 @@
     }
 
 </script>
+
+
+
 
 
 
