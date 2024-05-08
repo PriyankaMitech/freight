@@ -211,7 +211,7 @@
                                                 <th colspan="2">Hierarchy</th>
                                                 <th>Billed Qty.</th>
                                                 <th>No.Boxes</th>
-                                                <th>Freight</th>
+                                                <th>Contract Freight</th>
                                                 <th>Other Charges</th>
                                             </thead>
                                             <tbody>
@@ -234,7 +234,7 @@
                                                     <!-- <td></td>
                                                     <td></td>
                                                     <td></td> -->
-                                                    <td >Total:</td>
+                                                    <td >Total Freight Charges:</td>
                                                     <td><input type="text" name="total" class="total"></td>
                                                 </tr>
                                                 <tr style="background-color: #d7f1ee;">
